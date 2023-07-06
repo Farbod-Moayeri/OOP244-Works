@@ -1,0 +1,22 @@
+///////////////////////////////////////////////////////////////////////////
+
+                              
+                             Workshop - #5
+Full Name  : Farbod Moayeri
+Student ID#: 134395227
+Email      : fmoayeri2@myseneca.ca
+Section    : NBB
+
+Authenticity Declaration:
+
+I declare this submission is the result of my own work and has not been
+shared with any other student or 3rd party content provider. This submitted
+piece of work is entirely of my own creation.
+///////////////////////////////////////////////////////////////////////////
+
+
+This workshop allowed me to understand the practical application of operator overloading and also how to define them properly. While I was learning about this concept in class, it was a bit too abstract to fully comprehend until I began working on the workshop.
+
+I also did not understand the concept of helper functions that well until I worked on the workshop. I now understand that helper functions are mainly used when direct access to data members is not a necessity to perform an operation on the class. Such operations include certain operator overloads where neither operand changes, or some other action.
+
+The only thing I felt was difficult to understand and what I stumbled upon was on part 2 of the workshop where I had to create a += operator overload for mark that was outside of the class. What confused me is that the operator overload for += had a different amount of parameters depending on if it was within the class or not. Eventually I understood that the function was a helper function and that it had to be placed outside the class.

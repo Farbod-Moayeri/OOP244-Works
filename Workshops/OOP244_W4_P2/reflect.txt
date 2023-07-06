@@ -1,0 +1,26 @@
+///////////////////////////////////////////////////////////////////////////
+
+                              
+                             Workshop - #3
+Full Name  : Farbod Moayeri
+Student ID#: 134395227
+Email      : fmoayeri2@myseneca.ca
+Section    : NBB
+
+Authenticity Declaration:
+
+I declare this submission is the result of my own work and has not been
+shared with any other student or 3rd party content provider. This submitted
+piece of work is entirely of my own creation.
+///////////////////////////////////////////////////////////////////////////
+
+
+The only problem I really ran into for the duration of this workshop is char array memory allocation, specifically, remembering to add the + 1 for the null terminator byte at the end of the array. I ended up debugging with the visual studio debugger and then finding the string that was causing the problem. I ended up placing it on a watchlist and viola, I eventually realized that it had to be a semantic error regarding memory allocation.
+
+That was really the only trouble I had for the duration of the entire workshop, everything else was easy as pie.
+
+The only really interesting thing I learned throughout the entire project was this:
+
+ostringstream
+
+This object allows you to store text that you want to display on the screen, which is very handy for member functions that require ostream& returns.

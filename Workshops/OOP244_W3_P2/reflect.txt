@@ -1,0 +1,24 @@
+///////////////////////////////////////////////////////////////////////////
+
+                              
+                             Workshop - #3
+Full Name  : Farbod Moayeri
+Student ID#: 134395227
+Email      : fmoayeri2@myseneca.ca
+Section    : NBB
+
+Authenticity Declaration:
+
+I declare this submission is the result of my own work and has not been
+shared with any other student or 3rd party content provider. This submitted
+piece of work is entirely of my own creation.
+///////////////////////////////////////////////////////////////////////////
+
+
+What I learned through the duration of this workshop is that making methods that need to be private is good, but sometimes you need to make sure that the methods you set to private are not required by another object. In this case, my isEmpty method for my Food Class does not need to be public but has to be because my CalorieList Class requires it for list management.
+
+Another thing I came to understand is that the constructor really makes sure that you dont suffer memory problems just as much as deconstructors do. Making sure your pointer values are set to null in the constructor ensures that your program does not suffer a segmentation fault when it attempts to delete[] a pointer with a garbage value inside that may point to a valid memory address.
+
+It is also good practice to check if your pointer are null pointers before you delete them. Although it is safe to do so, it is better practice to not do it as it serves no purpose.
+
+I also have a pet peeve with having private Header and Footer methods for your public display method. Something about it annoys me, especially when you could just have all the code be in the public display method if it doesnt make it too cluttered.
