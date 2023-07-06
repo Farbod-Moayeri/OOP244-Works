@@ -23,21 +23,101 @@ namespace sdds {
    {
        if (fname != nullptr)
        {
+           if (m_filename != nullptr)
+           {
+               delete[] m_filename;
+               m_filename = nullptr;
+           }
+
            if (!isCopy)
            {
-               if (m_filename != nullptr)
-               {
-                   delete[] m_filename;
-                   m_filename = nullptr;
-               }
-
                m_filename = new char[strlen(fname) + 1];
-
+               strcpy(m_filename, fname);
            }
            else
            {
-
+               m_filename = new char[strlen(fname) + strlen("C_") + 1];
+               strCpy(m_filename, "C_");
+               strCat(m_filename, fname);
            }
+       }
+   }
+
+   void TextFile::setNoOfLines()
+   {
+       int i{};
+       char ch{};
+
+       ifstream file{};
+       file.open(m_filename, ios_base::in);
+
+       if (file.is_open())
+       {
+           while (file.get(ch))
+           {
+               if (ch == '\n')
+               {
+                   i++;
+               }
+           }
+       }
+       else
+       {
+           cerr << "ERROR: Cannot open " << m_filename << " at member function setNoOfLines!";
+           exit(1);
+       }
+
+       file.close();
+
+       if (i == 0)
+       {
+           setEmpty();
+       }
+       else
+       {
+           m_noOfLines = i + 1;
+       }
+
+   }
+
+   void TextFile::loadText()
+   {
+       int i{};
+       ifstream file{};
+       string singleLine{};
+       file.open(m_filename, ios_base::in);
+
+       if (m_filename != nullptr)
+       {
+           if (m_textLines != nullptr)
+           {
+               delete[] m_textLines;
+               m_textLines = nullptr;
+           }
+
+           if (m_noOfLines > 0)
+           {
+               m_textLines = new Line[m_noOfLines];
+               
+               if (file.is_open())
+               {
+               
+                   while (getline(file, singleLine))
+                   {
+                       m_textLines[i].m_value = new char[strLen(singleLine.c_str()) + 1];
+                       strCpy(m_textLines[i].m_value, singleLine.c_str());
+                       i++;
+                   }
+               }
+               else
+               {
+                   cerr << "ERROR: Cannot open " << m_filename <<" at member function loadText!";
+                   exit(1);
+               }
+           }
+
+           m_noOfLines = i;
+
        }
    }
 
