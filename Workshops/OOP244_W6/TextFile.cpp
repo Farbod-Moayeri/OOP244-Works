@@ -19,4 +19,35 @@ namespace sdds {
    }
 
 
+   void TextFile::setFilename(const char* fname, bool isCopy)
+   {
+       if (fname != nullptr)
+       {
+           if (!isCopy)
+           {
+               if (m_filename != nullptr)
+               {
+                   delete[] m_filename;
+                   m_filename = nullptr;
+               }
+
+               m_filename = new char[strlen(fname) + 1];
+
+           }
+           else
+           {
+
+           }
+       }
+   }
+
+   void TextFile::setEmpty()
+   {
+       delete[] m_textLines;
+       m_textLines = nullptr;
+       delete[] m_filename;
+       m_filename = nullptr;
+       m_noOfLines = 0;
+   }
+
 }
