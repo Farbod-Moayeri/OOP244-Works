@@ -32,7 +32,7 @@ namespace sdds {
            if (!isCopy)
            {
                m_filename = new char[strlen(fname) + 1];
-               strcpy(m_filename, fname);
+               strCpy(m_filename, fname);
            }
            else
            {
@@ -49,33 +49,37 @@ namespace sdds {
        char ch{};
 
        ifstream file{};
-       file.open(m_filename, ios_base::in);
 
-       if (file.is_open())
+       if (m_filename != nullptr)
        {
-           while (file.get(ch))
+           file.open(m_filename, ios_base::in);
+
+           if (file.is_open())
            {
-               if (ch == '\n')
+               while (file.get(ch))
                {
-                   i++;
+                   if (ch == '\n')
+                   {
+                       i++;
+                   }
                }
            }
-       }
-       else
-       {
-           cerr << "ERROR: Cannot open " << m_filename << " at member function setNoOfLines!";
-           exit(1);
-       }
+           else
+           {
+               cerr << "ERROR: Cannot open " << m_filename << " at member function setNoOfLines!";
+               exit(1);
+           }
 
-       file.close();
+           file.close();
 
-       if (i == 0)
-       {
-           setEmpty();
-       }
-       else
-       {
-           m_noOfLines = i + 1;
+           if (i == 0)
+           {
+               setEmpty();
+           }
+           else
+           {
+               m_noOfLines = i + 1;
+           }
        }
 
    }
@@ -85,10 +89,12 @@ namespace sdds {
        int i{};
        ifstream file{};
        string singleLine{};
-       file.open(m_filename, ios_base::in);
+      
 
        if (m_filename != nullptr)
        {
+           file.open(m_filename, ios_base::in);
+
            if (m_textLines != nullptr)
            {
                delete[] m_textLines;
@@ -97,11 +103,10 @@ namespace sdds {
 
            if (m_noOfLines > 0)
            {
-               m_textLines = new Line[m_noOfLines];
-               
                if (file.is_open())
                {
-               
+                   m_textLines = new Line[m_noOfLines];
+
                    while (getline(file, singleLine))
                    {
                        m_textLines[i].m_value = new char[strLen(singleLine.c_str()) + 1];
@@ -116,18 +121,194 @@ namespace sdds {
                }
            }
 
+           file.close();
+
            m_noOfLines = i;
 
        }
    }
 
+   void TextFile::saveAs(const char* fileName) const
+   {
+       unsigned int i;
+       ifstream file{};
+
+       if (fileName != nullptr)
+       {
+           file.open(fileName, ios_base::in);
+
+           if (file.is_open())
+           {
+               for (i = 0; i < m_noOfLines; i++)
+               {
+                   file << m_textLines[i] << endl;
+               }
+           }
+           else
+           {
+               cerr << "ERROR: Cannot open " << m_filename << " at member function saveAs!";
+               exit(1);
+           }
+
+           file.close();
+       }
+   }
+
    void TextFile::setEmpty()
    {
-       delete[] m_textLines;
-       m_textLines = nullptr;
-       delete[] m_filename;
-       m_filename = nullptr;
+       if (m_textLines != nullptr)
+       {
+           delete[] m_textLines;
+           m_textLines = nullptr;
+       }
+       
+       if (m_filename != nullptr)
+       {
+           delete[] m_filename;
+           m_filename = nullptr;
+       }
+    
        m_noOfLines = 0;
+   }
+
+   TextFile::TextFile(unsigned pageSize)
+   {
+       setEmpty();
+       m_pageSize = pageSize;
+   }
+
+   TextFile::TextFile(const char* filename, unsigned pageSize)
+   {
+       
+       m_pageSize = pageSize;
+       setEmpty();
+
+       if (filename != nullptr && filename[0] != '\0')
+       {
+           m_filename = new char[strLen(filename) + 1];
+           strCpy(m_filename, filename);
+
+           setNoOfLines();
+
+           loadText();
+       }
+   }
+
+   TextFile::TextFile(const TextFile& inc)
+   {
+       int i;
+       ifstream file{};
+
+       if (this != &inc)
+       {
+           this->m_pageSize = inc.m_pageSize;
+           setEmpty();
+
+           if (inc.m_filename != nullptr && inc.m_noOfLines > 0 && inc.m_textLines != nullptr)
+           {
+               setFilename(inc.m_filename, true);
+
+               m_noOfLines = inc.m_noOfLines;
+
+               loadText();
+
+               saveAs(m_filename);
+
+           }
+       }
+   }
+
+   TextFile& TextFile::operator=(const TextFile& inc)
+   {
+       if (inc && this)
+       {
+           this->setEmpty();
+           this->setFilename(inc.m_filename, false); //???
+           
+           this->setNoOfLines();
+           this->loadText();
+       }
+   }
+
+   TextFile::~TextFile()
+   {
+       if (m_textLines != nullptr)
+       {
+           delete[] m_textLines;
+           m_textLines = nullptr;
+       }
+
+       if (m_filename != nullptr)
+       {
+           delete[] m_filename;
+           m_textLines = nullptr;
+       }
+      
+   }
+
+
+   std::istream& TextFile::getFile(std::istream& istr)
+   {
+       string temp;
+
+       if (&istr != nullptr)
+       {
+           setEmpty();
+           istr >> temp;
+
+           m_filename = new char[strlen(temp.c_str()) + 1];
+           strCpy(m_filename, temp.c_str());
+           // istr.ignore(10000, '\n); ??????
+
+           setNoOfLines();
+           loadText();
+
+           return istr;
+       }
+   }
+
+   TextFile::operator bool() const
+   {
+       bool isit = false;
+
+       if (m_filename != nullptr && m_filename[0] != '\0' && m_textLines != nullptr && m_noOfLines > 0)
+       {
+           isit = true;
+       }
+
+       return isit;
+   }
+
+   unsigned TextFile::lines() const
+   {
+       return m_noOfLines;
+   }
+
+   const char* TextFile::name() const
+   {
+       return m_filename;
+   }
+
+   const char* TextFile::operator[](unsigned index) const
+   {
+       if (this)
+       {
+           if (index >= m_noOfLines)
+           {
+               index -= m_noOfLines;
+           }
+       }
+       else
+       {
+           return nullptr;
+       }
+
+       return m_textLines[index].m_value;
+   }
+
+   std::ostream& operator<<(std::ostream& ostr, const TextFile& text)
+   {
+        
    }
 
 }

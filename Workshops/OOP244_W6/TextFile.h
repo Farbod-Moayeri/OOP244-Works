@@ -14,10 +14,10 @@ namespace sdds {
    };
 
    class TextFile {
-      Line* m_textLines;
-      char* m_filename;
-      unsigned m_noOfLines;
-      unsigned m_pageSize;
+      Line* m_textLines{};
+      char* m_filename{};
+      unsigned m_noOfLines{};
+      unsigned m_pageSize{};
       void setFilename(const char* fname, bool isCopy = false);
       void setNoOfLines();
       void loadText();
@@ -26,8 +26,8 @@ namespace sdds {
    public:
       TextFile(unsigned pageSize = 15);
       TextFile(const char* filename, unsigned pageSize = 15);
-      TextFile(const TextFile&);
-      TextFile& operator=(const TextFile&);
+      TextFile(const TextFile& inc);
+      TextFile& operator=(const TextFile& inc);
       ~TextFile();
       std::ostream& view(std::ostream& ostr)const;
       std::istream& getFile(std::istream& istr);
