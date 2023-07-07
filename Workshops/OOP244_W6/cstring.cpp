@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////
-// Workshop 5
+// Workshop 6
 // Name: Farbod Moayeri
 // Id: 134395227
 // Email: fmoayeri2@myseneca.ca

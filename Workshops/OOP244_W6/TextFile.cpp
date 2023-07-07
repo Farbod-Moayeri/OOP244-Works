@@ -1,3 +1,14 @@
+///////////////////////////////////////////////////////
+// Workshop 6
+// Name: Farbod Moayeri
+// Id: 134395227
+// Email: fmoayeri2@myseneca.ca
+///////////////////////////////////////////////////////
+// I have done all the coding by myself and only copied
+// the code that my professor provided to complete my 
+// workshops and assignments.
+///////////////////////////////////////////////////////
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -131,7 +142,7 @@ namespace sdds {
    void TextFile::saveAs(const char* fileName) const
    {
        unsigned int i;
-       ifstream file{};
+       ofstream file{};
 
        if (fileName != nullptr)
        {
@@ -246,6 +257,39 @@ namespace sdds {
       
    }
 
+   std::ostream& TextFile::view(std::ostream& ostr) const
+   {
+       int i;
+       int length;
+
+       if (this)
+       {
+           length = strLen(m_filename);
+
+           ostr << m_filename << endl;
+           for (i = 0; i < length; i++)
+           {
+               ostr << '=';
+           }
+           cout << endl;
+           for (i = 0; i < m_noOfLines; i++)
+           {
+               ostr << this->m_textLines[i].m_value << endl;
+               if (i%m_pageSize == 0)
+               {
+                   ostr << "Hit ENTER to continue...";
+                   do {
+
+                   } while (cin.get() != '\n');
+               }
+           }
+           ostr << endl;
+       }
+
+       return ostr;
+           
+   }
+
 
    std::istream& TextFile::getFile(std::istream& istr)
    {
@@ -263,8 +307,10 @@ namespace sdds {
            setNoOfLines();
            loadText();
 
-           return istr;
+           
        }
+
+       return istr;
    }
 
    TextFile::operator bool() const
@@ -308,7 +354,25 @@ namespace sdds {
 
    std::ostream& operator<<(std::ostream& ostr, const TextFile& text)
    {
-        
+       if (&ostr != nullptr && &text != nullptr)
+       {
+           text.view(ostr);
+
+           cout << text;
+       }
+
+       return ostr;
+   }
+
+   std::istream& operator>>(std::istream& istr, TextFile& text)
+   {
+       if (&istr != nullptr && &text != nullptr)
+       {
+           text.getFile(istr);
+           
+       }
+
+       return istr;
    }
 
 }
