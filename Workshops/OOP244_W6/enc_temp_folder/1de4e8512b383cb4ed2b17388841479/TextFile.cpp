@@ -372,7 +372,7 @@ namespace sdds {
    {
        if (&ostr != nullptr && &text != nullptr)
        {
-           //text.view(ostr);
+           text.view(ostr);
 
            cout << text;
        }
@@ -384,7 +384,8 @@ namespace sdds {
    {
        if (&istr != nullptr && &text != nullptr)
        {
-           text.getFile(istr);   
+           text.getFile(istr);
+           
        }
 
        return istr;
