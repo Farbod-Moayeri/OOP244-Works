@@ -215,7 +215,9 @@ namespace sdds {
        if (this != &inc)
        {
            this->m_pageSize = inc.m_pageSize;
-           setEmpty();
+           m_filename = nullptr;
+           m_noOfLines = 0;
+           m_textLines = nullptr;
 
            if (inc.m_filename != nullptr && inc.m_noOfLines > 0 && inc.m_textLines != nullptr)
            {
