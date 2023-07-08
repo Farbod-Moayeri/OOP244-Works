@@ -29,7 +29,6 @@ namespace sdds {
       delete[] m_value;
    }
 
-
    void TextFile::setFilename(const char* fname, bool isCopy)
    {
        if (fname != nullptr)
@@ -98,13 +97,12 @@ namespace sdds {
    void TextFile::loadText()
    {
        int i{};
-       ifstream file{};
        string singleLine{};
       
 
        if (m_filename != nullptr)
        {
-           file.open(m_filename, ios_base::in);
+           ifstream file(m_filename);
 
            if (m_textLines != nullptr)
            {
@@ -120,8 +118,7 @@ namespace sdds {
 
                    while (getline(file, singleLine))
                    {
-                       m_textLines[i].m_value = new char[strLen(singleLine.c_str()) + 1];
-                       strCpy(m_textLines[i].m_value, singleLine.c_str());
+                       m_textLines[i] = singleLine.c_str();
                        i++;
                    }
                }
@@ -142,11 +139,11 @@ namespace sdds {
    void TextFile::saveAs(const char* fileName) const
    {
        unsigned int i;
-       ofstream file{};
 
        if (fileName != nullptr)
        {
-           file.open(fileName, ios_base::in);
+
+           ofstream file(fileName);
 
            if (file.is_open())
            {
@@ -207,8 +204,7 @@ namespace sdds {
 
    TextFile::TextFile(const TextFile& inc)
    {
-       int i;
-       ifstream file{};
+       
 
        if (this != &inc)
        {
@@ -219,12 +215,11 @@ namespace sdds {
            {
                setFilename(inc.m_filename, true);
 
+               inc.saveAs(m_filename);
+
                m_noOfLines = inc.m_noOfLines;
 
                loadText();
-
-               saveAs(m_filename);
-
            }
        }
    }
@@ -239,19 +234,11 @@ namespace sdds {
            delete[] this->m_textLines;
            m_textLines = nullptr;
 
-           m_textLines = new Line[inc.m_noOfLines];
+           inc.saveAs(m_filename);
 
-           tempName = m_filename;
-
-           setFilename(inc.m_filename);
+           m_noOfLines = inc.m_noOfLines;
 
            this->loadText();
-
-
-           //this->setFilename(inc.m_filename, false); //???
-           this->setNoOfLines();
-
-          
        }
 
        return *this;
@@ -275,10 +262,10 @@ namespace sdds {
 
    std::ostream& TextFile::view(std::ostream& ostr) const
    {
-       int i;
-       int length;
+       unsigned int i;
+       unsigned int length;
 
-       if (this)
+       if (*this)
        {
            length = strLen(m_filename);
 
@@ -290,16 +277,16 @@ namespace sdds {
            cout << endl;
            for (i = 0; i < m_noOfLines; i++)
            {
-               ostr << this->m_textLines[i].m_value << endl;
-               if (i%m_pageSize == 0)
+               if (i % m_pageSize == 0 && i != 0)
                {
                    ostr << "Hit ENTER to continue...";
-                   do {
-
-                   } while (cin.get() != '\n');
+                   
+                   cin.get();
                }
+               ostr << this->m_textLines[i].m_value << endl;
+             
            }
-           ostr << endl;
+     
        }
 
        return ostr;
@@ -318,12 +305,11 @@ namespace sdds {
 
            m_filename = new char[strlen(temp.c_str()) + 1];
            strCpy(m_filename, temp.c_str());
-           // istr.ignore(10000, '\n); ??????
+           istr.ignore(10000, '\n');
 
            setNoOfLines();
            loadText();
 
-           
        }
 
        return istr;
@@ -333,7 +319,7 @@ namespace sdds {
    {
        bool isit = false;
 
-       if (m_filename != nullptr && m_filename[0] != '\0' && m_textLines != nullptr && m_noOfLines > 0)
+       if (m_filename != nullptr)
        {
            isit = true;
        }
@@ -372,9 +358,7 @@ namespace sdds {
    {
        if (&ostr != nullptr && &text != nullptr)
        {
-           //text.view(ostr);
-
-           cout << text;
+           text.view(ostr);
        }
 
        return ostr;

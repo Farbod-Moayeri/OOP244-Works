@@ -20,6 +20,9 @@ namespace sdds {
       Line& operator=(const char*);
       ~Line();
       friend class TextFile;
+
+      Line(const Line& inc) = delete;
+      Line& operator=(const Line& inc) = delete;
       // copy and copy assignment prevention goes here
 
    };
