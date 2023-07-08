@@ -14,7 +14,9 @@
 #include <string>
 #include "TextFile.h"
 #include "cstring.h"
+
 using namespace std;
+
 namespace sdds {
    Line::operator const char* () const {
       return (const char*)m_value;
@@ -181,7 +183,9 @@ namespace sdds {
 
    TextFile::TextFile(unsigned pageSize)
    {
-       setEmpty();
+       m_noOfLines = 0;
+       m_textLines = nullptr;
+       m_filename = nullptr;
        m_pageSize = pageSize;
    }
 
@@ -189,13 +193,15 @@ namespace sdds {
    {
        
        m_pageSize = pageSize;
-       setEmpty();
+       m_textLines = nullptr;
+       m_filename = nullptr;
+       //setEmpty();
 
        if (filename != nullptr && filename[0] != '\0' && strStr(filename,".txt"))
        {
-           m_filename = new char[strLen(filename) + 1];
-           strCpy(m_filename, filename);
+           
 
+           setFilename(filename, false);
            setNoOfLines();
 
            loadText();
@@ -226,21 +232,21 @@ namespace sdds {
 
    TextFile& TextFile::operator=(const TextFile& inc)
    {
-       Line* temp = nullptr;
-       string tempName{};
-
-       if (inc && this)
+       
+       if (this != &inc)
        {
-           delete[] this->m_textLines;
-           m_textLines = nullptr;
+           if (inc && this)
+           {
+               delete[] this->m_textLines;
+               m_textLines = nullptr;
 
-           inc.saveAs(m_filename);
+               inc.saveAs(m_filename);
 
-           m_noOfLines = inc.m_noOfLines;
+               m_noOfLines = inc.m_noOfLines;
 
-           this->loadText();
+               this->loadText();
+           }
        }
-
        return *this;
    }
 
@@ -280,8 +286,7 @@ namespace sdds {
                if (i % m_pageSize == 0 && i != 0)
                {
                    ostr << "Hit ENTER to continue...";
-                   
-                   cin.get();
+                   cin.ignore(1000, '\n');
                }
                ostr << this->m_textLines[i].m_value << endl;
              
@@ -303,8 +308,8 @@ namespace sdds {
            setEmpty();
            istr >> temp;
 
-           m_filename = new char[strlen(temp.c_str()) + 1];
-           strCpy(m_filename, temp.c_str());
+           
+           setFilename(temp.c_str());
            istr.ignore(10000, '\n');
 
            setNoOfLines();
@@ -339,7 +344,7 @@ namespace sdds {
 
    const char* TextFile::operator[](unsigned index) const
    {
-       if (this)
+       if (*this)
        {
            if (index >= m_noOfLines)
            {
