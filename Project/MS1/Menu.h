@@ -1,7 +1,9 @@
 
 #ifndef SDDS_MENU_H__
 #define SDDS_MENU_H__
+
 #include <iostream>
+
 namespace sdds {
 
 	const unsigned MAX_MENU_ITEMS = 20;
@@ -28,7 +30,18 @@ namespace sdds {
 		Menu(const Menu& src) = delete;
 		Menu& operator=(const Menu& src) = delete;
 		Menu(const char string[] = nullptr);
+		operator bool()const;
+		operator unsigned() const;
+		unsigned operator~() const;
+		explicit Menu(int val) : m_numItems(val){}
+		
+		std::ostream& displayTitle(std::ostream& ostr)const;
+		std::ostream& displayMenu(std::ostream& ostr)const;
+		unsigned run() const;
+
+		~Menu();
 		friend MenuItem;
+		Menu& operator<<(const char* menuitemContent);
 
 	};
 

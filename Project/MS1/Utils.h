@@ -17,5 +17,9 @@
 
 namespace sdds {
 
+	void clearBuffer();
+	bool getUnsigned(unsigned &src);
+	unsigned getUnsignedRange(unsigned min, unsigned max, char errMsg[] = nullptr);
+
 }
 #endif // SDDS_UTILS_H__
