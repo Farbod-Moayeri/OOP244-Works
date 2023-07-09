@@ -46,7 +46,7 @@ namespace sdds {
         return passed;
     }
 
-    unsigned getUnsignedRange(unsigned min, unsigned max, char errMsg[])
+    unsigned getUnsignedRange(const unsigned min, const unsigned max, const char errMsg[])
     {
         unsigned Value{};
         bool isValid;

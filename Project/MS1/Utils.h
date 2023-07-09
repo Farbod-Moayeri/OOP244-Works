@@ -19,7 +19,7 @@ namespace sdds {
 
 	void clearBuffer();
 	bool getUnsigned(unsigned &src);
-	unsigned getUnsignedRange(unsigned min, unsigned max, char errMsg[] = nullptr);
+	unsigned getUnsignedRange(const unsigned min, const unsigned max, const char errMsg[] = nullptr);
 
 }
 #endif // SDDS_UTILS_H__

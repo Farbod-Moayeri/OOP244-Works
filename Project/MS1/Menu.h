@@ -26,24 +26,28 @@ namespace sdds {
 	class Menu {
 		MenuItem* m_ItemArray[MAX_MENU_ITEMS]{};
 		unsigned m_numItems{};
-		char* m_title{};
+		MenuItem m_title{};
 		Menu(const Menu& src) = delete;
 		Menu& operator=(const Menu& src) = delete;
+		//explicit Menu(int val) : m_numItems(val){}
+		~Menu();
+		friend MenuItem;
+	public:
+
 		Menu(const char string[] = nullptr);
 		operator bool()const;
 		operator unsigned() const;
+		operator int() const;
 		unsigned operator~() const;
-		explicit Menu(int val) : m_numItems(val){}
-		
+		Menu& operator<<(const char* menuitemContent);
+		const char* operator[](unsigned index) const;
 		std::ostream& displayTitle(std::ostream& ostr)const;
 		std::ostream& displayMenu(std::ostream& ostr)const;
 		unsigned run() const;
-
-		~Menu();
-		friend MenuItem;
-		Menu& operator<<(const char* menuitemContent);
-
+		
 	};
+
+	Menu& operator<<(ostream& ostr, const Menu& right);
 
 }
 #endif // !SDDS_MENU_H__

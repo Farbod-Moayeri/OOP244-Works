@@ -53,26 +53,38 @@ namespace sdds {
 
 	sdds::Menu::Menu(const char string[])
 	{
+
+		unsigned len{};
+
 		if (string != nullptr)
 		{
-			if (m_title != nullptr)
+			if (m_title.m_item != nullptr)
 			{
-				delete[] m_title;
-				m_title = nullptr;
+				delete[] m_title.m_item;
+				m_title.m_item = nullptr;
 			}
 
-			m_title = new char[strLen(string) + 1];
-			strCpy(m_title, string);
+			len = strLen(string);
+			m_title.m_length = len;
+			m_title.m_item = new char[len + 1];
+
+
+			strCpy(m_title.m_item, string);
 		}
 
 	}
 
 	Menu::operator bool() const
 	{
-		return (m_ItemArray != nullptr && m_numItems != 0);
+		return (m_numItems > 0);
 	}
 
 	Menu::operator unsigned() const
+	{
+		return this->m_numItems;
+	}
+
+	Menu::operator int() const
 	{
 		return this->m_numItems;
 	}
@@ -85,19 +97,40 @@ namespace sdds {
 
 	Menu& Menu::operator<<(const char* menuitemContent)
 	{
-		unsigned i;
+		unsigned i{};
+		unsigned len{};
 
 		if (menuitemContent != nullptr && m_numItems < MAX_MENU_ITEMS)
 		{
 			for (i = 0; i < MAX_MENU_ITEMS && m_ItemArray[i] != nullptr; i++){}
 			if (i < m_numItems)
 			{
-				m_ItemArray = new MenuItem[1];
-				
+				m_ItemArray[i] = new MenuItem[1];
+				len = strLen(menuitemContent);
+				m_ItemArray[i]->m_length = len;
+				m_ItemArray[i]->m_item = new char[len + 1];
+				strCpy(m_ItemArray[i]->m_item, menuitemContent);
+				m_numItems++;
 			}
 		}
 
 		return *this;
+	}
+
+	const char* Menu::operator[](unsigned index) const
+	{
+		unsigned i{};
+
+		if (index > m_numItems)
+		{
+			i = index - m_numItems;
+		}
+		else
+		{
+			i = index;
+		}
+
+		return (const char*)m_ItemArray[i];
 	}
 
 	std::ostream& Menu::displayTitle(std::ostream& ostr) const
@@ -118,7 +151,15 @@ namespace sdds {
 			displayTitle(ostr) << ":" << '\n';
 			for (i = 0; i < m_numItems; i++)
 			{
-				ostr << right <<setw(2) << i + 1 << "- " << left << setw(0) << m_ItemArray[i] << '\n';
+				if (m_ItemArray[i] != nullptr)
+				{
+					ostr << right << setw(2) << i + 1 << "- " << left << setw(0) << m_ItemArray[i] << '\n';
+				}
+				else
+				{
+					ostr << right << setw(2) << i + 1 << "- " << left << setw(0) << "Empty" << '\n';
+				}
+				
 			}
 			ostr << " 0- Exit" << '\n' << "> ";
 		}
@@ -127,7 +168,7 @@ namespace sdds {
 	unsigned Menu::run() const
 	{
 		displayMenu(cout);
-		return getUnsignedRange(1, m_numItems - 1);
+		return getUnsignedRange(1, m_numItems - 1, "Invalid Selection, try again: ");
 	}
 
 	Menu::~Menu()
@@ -142,6 +183,12 @@ namespace sdds {
 				m_ItemArray[i] = nullptr;
 			}
 		}
+	}
+
+	
+	Menu& operator<<(ostream& ostr, const Menu& right)
+	{
+		right.displayTitle(ostr);
 	}
 
 }
