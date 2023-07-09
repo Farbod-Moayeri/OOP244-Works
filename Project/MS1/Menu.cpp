@@ -47,4 +47,13 @@ namespace sdds {
 		return ostr;
 	}
 
+	sdds::Menu::Menu(const char string[])
+	{
+		if (string != nullptr)
+		{
+
+		}
+
+	}
+
 }

@@ -22,10 +22,12 @@ namespace sdds {
 	};
 
 	class Menu {
+		MenuItem* m_ItemArray[MAX_MENU_ITEMS]{};
+		unsigned m_numItems{};
+		char* m_title{};
 		Menu(const Menu& src) = delete;
 		Menu& operator=(const Menu& src) = delete;
-		char* m_title{};
-		MenuItem *m_ItemArray[MAX_MENU_ITEMS];
+		Menu(const char string[] = nullptr);
 		friend MenuItem;
 
 	};
