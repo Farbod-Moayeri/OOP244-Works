@@ -43,12 +43,12 @@ namespace sdds {
 
            if (!isCopy)
            {
-               m_filename = new char[strlen(fname) + 1];
+               m_filename = new char[strLen(fname) + 1];
                strCpy(m_filename, fname);
            }
            else
            {
-               m_filename = new char[strlen(fname) + strlen("C_") + 1];
+               m_filename = new char[strLen(fname) + 3];
                strCpy(m_filename, "C_");
                strCat(m_filename, fname);
            }
@@ -60,11 +60,10 @@ namespace sdds {
        int i{};
        char ch{};
 
-       ifstream file{};
 
        if (m_filename != nullptr)
        {
-           file.open(m_filename, ios_base::in);
+           ifstream file(m_filename, ios_base::in);
 
            if (file.is_open())
            {
@@ -94,6 +93,8 @@ namespace sdds {
            }
        }
 
+       
+
    }
 
    void TextFile::loadText()
@@ -116,7 +117,11 @@ namespace sdds {
            {
                if (file.is_open())
                {
+                  
+                   
                    m_textLines = new Line[m_noOfLines];
+                   
+                
 
                    while (getline(file, singleLine))
                    {
@@ -136,11 +141,13 @@ namespace sdds {
            m_noOfLines = i;
 
        }
+
+      
    }
 
    void TextFile::saveAs(const char* fileName) const
    {
-       unsigned int i;
+      unsigned int i;
 
        if (fileName != nullptr)
        {
@@ -162,6 +169,8 @@ namespace sdds {
 
            file.close();
        }
+
+       
    }
 
    void TextFile::setEmpty()
@@ -210,14 +219,12 @@ namespace sdds {
 
    TextFile::TextFile(const TextFile& inc)
    {
-       
+       this->m_pageSize = inc.m_pageSize;
+       setEmpty();
 
        if (this != &inc)
        {
-           this->m_pageSize = inc.m_pageSize;
-           m_filename = nullptr;
-           m_noOfLines = 0;
-           m_textLines = nullptr;
+
 
            if (inc.m_filename != nullptr && inc.m_noOfLines > 0 && inc.m_textLines != nullptr)
            {
@@ -308,9 +315,9 @@ namespace sdds {
        if (&istr != nullptr)
        {
            setEmpty();
+
            istr >> temp;
 
-           
            setFilename(temp.c_str());
            istr.ignore(10000, '\n');
 
