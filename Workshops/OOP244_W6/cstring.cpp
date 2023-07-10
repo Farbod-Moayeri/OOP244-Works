@@ -228,6 +228,7 @@ namespace sdds {
 				
 			}
 
+			
 			des[i + j] = '\0';
 			// doot
 		}
