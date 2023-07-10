@@ -19,6 +19,8 @@ using namespace std;
 #include "Utils.h"
 
 namespace sdds {
+
+
    bool Date::validate() {
       errCode(NO_ERROR);
       if (m_year < MIN_YEAR || m_year > m_CUR_YEAR + 1) {
@@ -32,17 +34,25 @@ namespace sdds {
       }
       return !bad();
    }
+
+   void Date::errCode(int readErrorCode) {
+       m_ErrorCode = readErrorCode;
+   }
+   int Date::systemYear()const {
+       time_t t = time(NULL);
+       tm lt = *localtime(&t);
+       return lt.tm_year + 1900;
+   }
+   bool Date::bad()const {
+       return m_ErrorCode != 0;
+   }
    int Date::mdays()const {
       int days[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31, -1 };
       int mon = m_mon >= 1 && m_mon <= 12 ? m_mon : 13;
       mon--;
       return days[mon] + int((mon == 1) * ((m_year % 4 == 0) && (m_year % 100 != 0)) || (m_year % 400 == 0));
    }
-   int Date::systemYear()const {
-      time_t t = time(NULL);
-      tm lt = *localtime(&t);
-      return lt.tm_year + 1900;
-   }
+   
    void Date::setToToday() {
       time_t t = time(NULL);
       tm lt = *localtime(&t);
@@ -69,6 +79,9 @@ namespace sdds {
       m_day = day;
       validate();
    }
+   int Date::errCode()const {
+       return m_ErrorCode;
+   }
    const char* Date::dateStatus()const {
       return DATE_ERROR[errCode()];
    }
@@ -80,73 +93,68 @@ namespace sdds {
        bool passed = false;
        int day = -1, month = -1, year = -1;
 
+        errCode(NO_ERROR);
 
+        if (m_ErrorCode != NO_ERROR)
+        {
+            cout << dateStatus();
+        }
 
-       do {
-
-
-           if (m_ErrorCode != NO_ERROR)
-           {
-               cout << dateStatus() << ", Please try again > ";
-           }
-
-           errCode(NO_ERROR);
-
-           if (getInt(year, is))
-           {
-               if (is.get() == '/')
-               {
-                   if (getInt(month, is))
-                   {
-                       if (is.get() == '/')
-                       {
-                           if(getInt(day, is)){}
-                           else
-                           {
-                               errCode(CIN_FAILED);
-                           }
-                       }
-                       else
-                       {
-                           errCode(CIN_FAILED);
-                       }
-                   }
-                   else
-                   {
-                       errCode(CIN_FAILED);
-                   }
+        if (getInt(year, is))
+        {
+            if (is.get() == '/')
+            {
+                if (getInt(month, is))
+                {
+                    if (is.get() == '/')
+                    {
+                        if(getInt(day, is)){}
+                        else
+                        {
+                            errCode(CIN_FAILED);
+                        }
+                    }
+                    else
+                    {
+                        errCode(CIN_FAILED);
+                    }
+                }
+                else
+                {
+                    errCode(CIN_FAILED);
+                }
                    
-               }
-               else
-               {
-                   errCode(CIN_FAILED);
-               }
+            }
+            else
+            {
+                errCode(CIN_FAILED);
+            }
                
-           }
-           else
-           {
-               errCode(CIN_FAILED);
-           }
+        }
+        else
+        {
+            errCode(CIN_FAILED);
+        }
            
-           if (m_ErrorCode != CIN_FAILED)
-           {
-               m_day = day;
-               m_mon = month;
-               m_year = year;
+        if (m_ErrorCode != CIN_FAILED)
+        {
+            m_day = day;
+            m_mon = month;
+            m_year = year;
 
 
-               if (validate() && m_ErrorCode == NO_ERROR)
-               {
-                   passed = true;
-               }
-           }
-           else
-           {
-               is.ignore(10000,'\n');
-           }
-
+            if (validate() && m_ErrorCode == NO_ERROR)
+            {
+                passed = true;
+            }
+        }
+        else
+        {
+            is.ignore(10000,'\n');
+        }
+        
            
-       } while (!passed);
+       
        
 
        return is;
@@ -164,48 +172,43 @@ namespace sdds {
 
        return os;
    }
-   bool Date::operator==(Date& right) const
-   {
-       return this->daysSince0001_1_1() == right.daysSince0001_1_1();
-   }
-   bool Date::operator!=(Date& right) const
-   {
-       return this->daysSince0001_1_1() != right.daysSince0001_1_1();
-   }
-   bool Date::operator>=(Date& right) const
-   {
-       return  this->daysSince0001_1_1() >= right.daysSince0001_1_1();
-   }
-   bool Date::operator<=(Date& right) const
-   {
-       return this->daysSince0001_1_1() <= right.daysSince0001_1_1();
-   }
-   bool Date::operator<(Date& right) const
-   {
-       return this->daysSince0001_1_1() < right.daysSince0001_1_1();
-   }
-   bool Date::operator>(Date& right) const
-   {
-       return this->daysSince0001_1_1() > right.daysSince0001_1_1();
-   }
-   int Date::operator-(Date& right) const
-   {
-       return this->daysSince0001_1_1() - right.daysSince0001_1_1();
-   }
+   
+
    Date::operator bool() const
    {
        return !this->bad();
    }
-   void Date::errCode(int readErrorCode) {
-      m_ErrorCode = readErrorCode;
+   
+   
+   
+   bool operator==(const Date& left, const Date& right)
+   {
+       return left.daysSince0001_1_1() == right.daysSince0001_1_1();
    }
-   int Date::errCode()const {
-      return m_ErrorCode;
+   bool operator!=(const Date& left, const Date& right)
+   {
+       return left.daysSince0001_1_1() != right.daysSince0001_1_1();
    }
-   bool Date::bad()const {
-      return m_ErrorCode != 0;
+   bool operator>=(const Date& left, const Date& right)
+   {
+       return left.daysSince0001_1_1() >= right.daysSince0001_1_1();
    }
-  
+   bool operator<=(const Date& left, const Date& right)
+   {
+       return left.daysSince0001_1_1() <= right.daysSince0001_1_1();
+   }
+   bool operator<(const Date& left, const Date& right)
+   {
+       return left.daysSince0001_1_1() < right.daysSince0001_1_1();
+   }
+   bool operator>(const Date& left, const Date& right)
+   {
+       return left.daysSince0001_1_1() > right.daysSince0001_1_1();
+   }
+   int operator-(const Date& left, const Date& right)
+   {
+       return left.daysSince0001_1_1() - right.daysSince0001_1_1();
+   }
    ostream& operator<<(ostream& os, const Date& RO) {
       return RO.write(os);
    }

@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 ///////////////////////////////////////////////////////
 // MS1
 // Name: Farbod Moayeri
@@ -10,9 +11,10 @@
 // workshops and assignments.
 ///////////////////////////////////////////////////////
 
+#include <cstring>
 #include <iomanip>
 #include "Menu.h"
-#include "cstring.h"
+//#include "cstring.h" *wierd matrix error message that states that my strLen and strCpy functions do not have a reference, never happened before
 #include "Utils.h"
 
 using namespace std;
@@ -25,9 +27,9 @@ namespace sdds {
 		// everything is already set to null
 		if (string != nullptr && string[0] != '\0' && m_item == nullptr)
 		{
-			m_length = strLen(string);
+			m_length = strlen(string);
 			m_item = new char[m_length + 1];
-			strCpy(m_item, string);
+			strcpy(m_item, string);
 		}
 
 	}
@@ -75,12 +77,12 @@ namespace sdds {
 				m_title.m_item = nullptr;
 			}
 
-			len = strLen(string);
+			len = strlen(string);
 			m_title.m_length = len;
 			m_title.m_item = new char[len + 1];
 
 
-			strCpy(m_title.m_item, string);
+			strcpy(m_title.m_item, string);
 		}
 
 	}
@@ -130,10 +132,10 @@ namespace sdds {
 			if (i + 1 < MAX_MENU_ITEMS)
 			{
 				m_ItemArray[i] = new MenuItem[1];
-				len = strLen(menuitemContent);
+				len = strlen(menuitemContent);
 				m_ItemArray[i]->m_length = len;
 				m_ItemArray[i]->m_item = new char[len + 1];
-				strCpy(m_ItemArray[i]->m_item, menuitemContent);
+				strcpy(m_ItemArray[i]->m_item, menuitemContent);
 				m_numItems++;
 			}
 		}

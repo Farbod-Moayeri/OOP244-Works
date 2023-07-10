@@ -30,7 +30,7 @@ namespace sdds {
 
     bool getInt(int& src)
     {
-        bool passed = true;
+        bool passed = false;
         
         unsigned value{};
         
@@ -39,14 +39,17 @@ namespace sdds {
         if (cin.fail()) {
             cin.clear();
             clearBuffer();
-            passed = false;
         }
         else
         {
+            passed = true;
             src = value;
         }
-       
-        clearBuffer();
+        
+        if (passed)
+        {
+            clearBuffer();
+        }
         return passed;
     }
 
@@ -83,6 +86,15 @@ namespace sdds {
                     }
                 }
             }
+            else
+            {
+                isValid = false;
+                if (errMsg != nullptr)
+                {
+                    std::cout << errMsg;
+                }
+            }
+
         } while (!isValid);
 
         return Value;

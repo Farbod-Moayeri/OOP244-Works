@@ -32,7 +32,6 @@ namespace sdds {
       int m_day;
       int m_ErrorCode;
       int m_CUR_YEAR;
-      int daysSince0001_1_1()const; // returns number of days passed since the date 0001/1/1
       bool validate();             /* validates the date setting the error code and then returning the result 
                                     true, if valid, and false if invalid.*/
       void errCode(int);           // sets the error code
@@ -41,6 +40,7 @@ namespace sdds {
       int mdays()const;            // returns the number of days in current month
       void setToToday();           // sets the date to the current date (system date)
    public:
+      int daysSince0001_1_1()const; // returns number of days passed since the date 0001/1/1
       Date();                      // creates a date with current date
       Date(int year, int mon, int day); /* create a date with assigned values
                                          then validates the date and sets the 
@@ -50,18 +50,17 @@ namespace sdds {
       int currentYear()const;         // returns the m_CUR_YEAR value;
       std::istream& read(std::istream& is = std::cin);
       std::ostream& write(std::ostream& os = std::cout)const;
-      bool operator==(Date& right) const;
-      bool operator!=(Date& right) const;
-      bool operator>=(Date& right) const;
-      bool operator<=(Date& right) const;
-      bool operator<(Date& right) const;
-      bool operator>(Date& right) const;
-      int operator-(Date& right) const;
-      operator bool()const;
+      explicit operator bool()const;
 
-
-      
    };
+
+   bool operator==(const Date& left, const Date& right);
+   bool operator!=(const Date& left, const Date& right);
+   bool operator>=(const Date& left, const Date& right);
+   bool operator<=(const Date& left, const Date& right);
+   bool operator<(const Date& left, const Date& right);
+   bool operator>(const Date& left, const Date& right);
+   int operator-(const Date& left, const Date& right);
    std::ostream& operator<<(std::ostream& os, const Date& RO);
    std::istream& operator>>(std::istream& is, Date& RO);
 }
