@@ -1,9 +1,9 @@
 /***********************************************************************
 // OOP244 Utils Module
 // File	Utils.cpp
-// Version
-// Date
-// Author
+// Version 1.0
+// Date 2023-07-10
+// Author Farbod Moayeri
 // Description
 //
 // Revision History
