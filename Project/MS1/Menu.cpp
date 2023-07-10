@@ -74,6 +74,20 @@ namespace sdds {
 
 	}
 
+	Menu::~Menu()
+	{
+		unsigned i;
+
+		if (m_ItemArray != nullptr)
+		{
+			for (i = 0; i < m_numItems; i++)
+			{
+				delete[] m_ItemArray[i];
+				m_ItemArray[i] = nullptr;
+			}
+		}
+	}
+
 	Menu::operator bool() const
 	{
 		return (m_numItems > 0);
@@ -91,8 +105,7 @@ namespace sdds {
 
 	unsigned Menu::operator~() const
 	{
-		displayMenu(cout);
-		return getUnsignedRange(1, m_numItems - 1);
+		return run();
 	}
 
 	Menu& Menu::operator<<(const char* menuitemContent)
@@ -103,7 +116,7 @@ namespace sdds {
 		if (menuitemContent != nullptr && m_numItems < MAX_MENU_ITEMS)
 		{
 			for (i = 0; i < MAX_MENU_ITEMS && m_ItemArray[i] != nullptr; i++){}
-			if (i < m_numItems)
+			if (i + 1 < MAX_MENU_ITEMS)
 			{
 				m_ItemArray[i] = new MenuItem[1];
 				len = strLen(menuitemContent);
@@ -130,14 +143,14 @@ namespace sdds {
 			i = index;
 		}
 
-		return (const char*)m_ItemArray[i];
+		return (const char*)m_ItemArray[i]->m_item;
 	}
 
 	std::ostream& Menu::displayTitle(std::ostream& ostr) const
 	{
-		if (m_title != nullptr)
+		if (m_title.m_item != nullptr)
 		{
-			ostr << m_title;
+			ostr << m_title.m_item;
 		}
 		return ostr;
 	}
@@ -148,12 +161,15 @@ namespace sdds {
 
 		if (*this)
 		{
-			displayTitle(ostr) << ":" << '\n';
+			if (m_title.m_item != nullptr)
+			{
+				displayTitle(ostr) << ":" << '\n';
+			}
 			for (i = 0; i < m_numItems; i++)
 			{
 				if (m_ItemArray[i] != nullptr)
 				{
-					ostr << right << setw(2) << i + 1 << "- " << left << setw(0) << m_ItemArray[i] << '\n';
+					ostr << right << setw(2) << i + 1 << "- " << left << setw(0) << m_ItemArray[i]->m_item << '\n';
 				}
 				else
 				{
@@ -169,23 +185,13 @@ namespace sdds {
 
 	unsigned Menu::run() const
 	{
+		unsigned temp;
 		displayMenu(cout);
-		return getUnsignedRange(1, m_numItems - 1, "Invalid Selection, try again: ");
+		temp = getUnsignedRange(0, m_numItems, "Invalid Selection, try again: ");
+		return temp;
 	}
 
-	Menu::~Menu()
-	{
-		unsigned i;
-
-		if (m_ItemArray != nullptr)
-		{
-			for (i = 0; i < m_numItems; i++)
-			{
-				delete[] m_ItemArray[i];
-				m_ItemArray[i] = nullptr;
-			}
-		}
-	}
+	
 
 	
 	std::ostream& operator<<(ostream& ostr, const Menu& right)

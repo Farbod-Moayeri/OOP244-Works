@@ -37,6 +37,7 @@ namespace sdds {
         unsigned value{};
         
         cin >> value;
+
         if (cin.fail()) {
             cin.clear();
             clearBuffer();
@@ -47,6 +48,7 @@ namespace sdds {
             src = value;
         }
        
+        clearBuffer();
         return passed;
     }
 

@@ -29,7 +29,7 @@ namespace sdds {
 		MenuItem m_title{};
 		Menu(const Menu& src) = delete;
 		Menu& operator=(const Menu& src) = delete;
-		//explicit Menu(int val) : m_numItems(val){}
+		
 		
 		friend MenuItem;
 	public:

@@ -27,7 +27,7 @@
     <ClCompile Include="cstring.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="dateTester.cpp">
+    <ClCompile Include="menuTester.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

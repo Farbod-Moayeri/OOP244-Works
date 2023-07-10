@@ -141,8 +141,8 @@
   <ItemGroup>
     <ClCompile Include="cstring.cpp" />
     <ClCompile Include="Date.cpp" />
-    <ClCompile Include="dateTester.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="menuTester.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
