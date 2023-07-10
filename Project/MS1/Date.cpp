@@ -143,10 +143,8 @@ namespace sdds {
             m_year = year;
 
 
-            if (validate() && m_ErrorCode == NO_ERROR)
-            {
-                passed = true;
-            }
+            validate();
+            
         }
         else
         {
