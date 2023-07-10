@@ -90,8 +90,8 @@ namespace sdds {
    }
    std::istream& Date::read(std::istream& is)
    {
-       bool passed = false;
-       int day = -1, month = -1, year = -1;
+       
+        int day = -1, month = -1, year = -1;
 
         errCode(NO_ERROR);
 
