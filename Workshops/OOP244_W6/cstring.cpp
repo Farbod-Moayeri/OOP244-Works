@@ -223,13 +223,13 @@ namespace sdds {
 
 			for (j = 0; src[j] != '\0'; j++)
 			{
+				
 				des[i + j] = src[j];
+				
 			}
 
-			if (src[i + j] != '\0')
-			{
-				des[i + j] = '\0';
-			}
+			des[i + j] = '\0';
+			
 		}
 	}
 

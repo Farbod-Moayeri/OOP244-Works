@@ -121,7 +121,7 @@ namespace sdds {
                    
                    m_textLines = new Line[m_noOfLines];
                    
-                
+           
 
                    while (getline(file, singleLine))
                    {
@@ -148,11 +148,12 @@ namespace sdds {
    void TextFile::saveAs(const char* fileName) const
    {
       unsigned int i;
+      ofstream file{};
 
        if (fileName != nullptr)
        {
 
-           ofstream file(fileName);
+           file.open(fileName);
 
            if (file.is_open())
            {
@@ -206,14 +207,15 @@ namespace sdds {
        m_filename = nullptr;
        //setEmpty();
 
-       if (filename != nullptr && filename[0] != '\0' && strStr(filename,".txt"))
+       if (filename != nullptr && filename[0] != '\0')
        {
-           
+           if (strStr(filename, ".txt"))
+           {
+               setFilename(filename, false);
+               setNoOfLines();
 
-           setFilename(filename, false);
-           setNoOfLines();
-
-           loadText();
+               loadText();
+           }
        }
    }
 
@@ -224,9 +226,7 @@ namespace sdds {
 
        if (this != &inc)
        {
-
-
-           if (inc.m_filename != nullptr && inc.m_noOfLines > 0 && inc.m_textLines != nullptr)
+           if (inc && strStr(inc.m_filename, ".txt"))
            {
                setFilename(inc.m_filename, true);
 
