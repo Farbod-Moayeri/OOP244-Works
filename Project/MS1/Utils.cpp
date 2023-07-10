@@ -14,7 +14,11 @@
 ***********************************************************************/
 
 #include <iostream>
+#include <string>
+#include <regex>
 #include "Utils.h"
+
+using namespace std;
 
 namespace sdds {
 
@@ -26,15 +30,15 @@ namespace sdds {
         }
     }
 
-    bool getUnsigned(unsigned& src)
+    bool getInt(int& src)
     {
         bool passed = true;
         
         unsigned value{};
-
-        std::cin >> value;
-        if (std::cin.fail()) {
-            std::cin.clear();
+        
+        cin >> value;
+        if (cin.fail()) {
+            cin.clear();
             clearBuffer();
             passed = false;
         }
@@ -46,14 +50,29 @@ namespace sdds {
         return passed;
     }
 
-    unsigned getUnsignedRange(const unsigned min, const unsigned max, const char errMsg[])
+    bool getInt(int& src, std::istream& is)
     {
-        unsigned Value{};
+        bool passed = true;
+
+        is >> src;
+
+        if (is.fail()) {
+            is.clear();
+            //clearBuffer();
+            passed = false;
+        }
+
+        return passed;
+    }
+
+    unsigned getUnsignedRange(const int min, const int max, const char errMsg[])
+    {
+        int Value{};
         bool isValid;
 
         do {
             isValid = true;
-            if (getUnsigned(Value))
+            if (getInt(Value))
             {
                 if (!(Value > (min - 1) && Value < (max + 1)))
                 {
@@ -68,4 +87,6 @@ namespace sdds {
 
         return Value;
     }
+
+  
 }

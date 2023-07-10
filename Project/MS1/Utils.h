@@ -18,8 +18,9 @@
 namespace sdds {
 
 	void clearBuffer();
-	bool getUnsigned(unsigned &src);
-	unsigned getUnsignedRange(const unsigned min, const unsigned max, const char errMsg[] = nullptr);
+	bool getInt(int &src);
+	bool getInt(int& src, std::istream& is);
+	unsigned getUnsignedRange(const int min, const int max, const char errMsg[] = nullptr);
 
 }
 #endif // SDDS_UTILS_H__

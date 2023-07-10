@@ -24,10 +24,10 @@
     <ClCompile Include="Menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ms1_tester.cpp">
+    <ClCompile Include="cstring.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="cstring.cpp">
+    <ClCompile Include="dateTester.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

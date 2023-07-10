@@ -163,6 +163,8 @@ namespace sdds {
 			}
 			ostr << " 0- Exit" << '\n' << "> ";
 		}
+
+		return ostr;
 	}
 
 	unsigned Menu::run() const
@@ -186,9 +188,11 @@ namespace sdds {
 	}
 
 	
-	Menu& operator<<(ostream& ostr, const Menu& right)
+	std::ostream& operator<<(ostream& ostr, const Menu& right)
 	{
 		right.displayTitle(ostr);
+
+		return ostr;
 	}
 
 }

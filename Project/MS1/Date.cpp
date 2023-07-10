@@ -12,8 +12,12 @@
 #include <iomanip>
 #include <iostream>
 #include <ctime>
+#include <string>
+
 using namespace std;
 #include "Date.h"
+#include "Utils.h"
+
 namespace sdds {
    bool Date::validate() {
       errCode(NO_ERROR);
@@ -70,6 +74,127 @@ namespace sdds {
    }
    int Date::currentYear()const {
       return m_CUR_YEAR;
+   }
+   std::istream& Date::read(std::istream& is)
+   {
+       bool passed = false;
+       int day = -1, month = -1, year = -1;
+
+
+
+       do {
+
+
+           if (m_ErrorCode != NO_ERROR)
+           {
+               cout << dateStatus() << ", Please try again > ";
+           }
+
+           errCode(NO_ERROR);
+
+           if (getInt(year, is))
+           {
+               if (is.get() == '/')
+               {
+                   if (getInt(month, is))
+                   {
+                       if (is.get() == '/')
+                       {
+                           if(getInt(day, is)){}
+                           else
+                           {
+                               errCode(CIN_FAILED);
+                           }
+                       }
+                       else
+                       {
+                           errCode(CIN_FAILED);
+                       }
+                   }
+                   else
+                   {
+                       errCode(CIN_FAILED);
+                   }
+                   
+               }
+               else
+               {
+                   errCode(CIN_FAILED);
+               }
+               
+           }
+           else
+           {
+               errCode(CIN_FAILED);
+           }
+           
+           if (m_ErrorCode != CIN_FAILED)
+           {
+               m_day = day;
+               m_mon = month;
+               m_year = year;
+
+
+               if (validate() && m_ErrorCode == NO_ERROR)
+               {
+                   passed = true;
+               }
+           }
+           else
+           {
+               is.ignore(10000,'\n');
+           }
+
+           
+       } while (!passed);
+       
+
+       return is;
+   }
+   std::ostream& Date::write(std::ostream& os) const
+   {
+       if (!*this)
+       {
+           os << dateStatus();
+       }
+       else
+       {
+           os << m_year << '/' << setw(2) << setfill('0') << m_mon << '/' << m_day << setfill(' ') << setw(0);
+       }
+
+       return os;
+   }
+   bool Date::operator==(Date& right) const
+   {
+       return this->daysSince0001_1_1() == right.daysSince0001_1_1();
+   }
+   bool Date::operator!=(Date& right) const
+   {
+       return this->daysSince0001_1_1() != right.daysSince0001_1_1();
+   }
+   bool Date::operator>=(Date& right) const
+   {
+       return  this->daysSince0001_1_1() >= right.daysSince0001_1_1();
+   }
+   bool Date::operator<=(Date& right) const
+   {
+       return this->daysSince0001_1_1() <= right.daysSince0001_1_1();
+   }
+   bool Date::operator<(Date& right) const
+   {
+       return this->daysSince0001_1_1() < right.daysSince0001_1_1();
+   }
+   bool Date::operator>(Date& right) const
+   {
+       return this->daysSince0001_1_1() > right.daysSince0001_1_1();
+   }
+   int Date::operator-(Date& right) const
+   {
+       return this->daysSince0001_1_1() - right.daysSince0001_1_1();
+   }
+   Date::operator bool() const
+   {
+       return !this->bad();
    }
    void Date::errCode(int readErrorCode) {
       m_ErrorCode = readErrorCode;

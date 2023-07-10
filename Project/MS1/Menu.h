@@ -30,11 +30,12 @@ namespace sdds {
 		Menu(const Menu& src) = delete;
 		Menu& operator=(const Menu& src) = delete;
 		//explicit Menu(int val) : m_numItems(val){}
-		~Menu();
+		
 		friend MenuItem;
 	public:
 
 		Menu(const char string[] = nullptr);
+		~Menu();
 		operator bool()const;
 		operator unsigned() const;
 		operator int() const;
@@ -47,7 +48,8 @@ namespace sdds {
 		
 	};
 
-	Menu& operator<<(ostream& ostr, const Menu& right);
+	
+	std::ostream& operator<<(std::ostream& ostr, const Menu& right);
 
 }
 #endif // !SDDS_MENU_H__
