@@ -179,39 +179,39 @@ namespace sdds {
    
    
    
-   bool operator==(const Date& left, const Date& right)
+   bool Date::operator==(const Date& right) const
    {
-       return left.daysSince0001_1_1() == right.daysSince0001_1_1();
+       return this->daysSince0001_1_1() == right.daysSince0001_1_1();
    }
-   bool operator!=(const Date& left, const Date& right)
+   bool Date::operator!=(const Date& right) const
    {
-       return left.daysSince0001_1_1() != right.daysSince0001_1_1();
+       return this->daysSince0001_1_1() != right.daysSince0001_1_1();
    }
-   bool operator>=(const Date& left, const Date& right)
+   bool Date::operator>=(const Date& right) const
    {
-       return left.daysSince0001_1_1() >= right.daysSince0001_1_1();
+       return this->daysSince0001_1_1() >= right.daysSince0001_1_1();
    }
-   bool operator<=(const Date& left, const Date& right)
+   bool Date::operator<=(const Date& right) const
    {
-       return left.daysSince0001_1_1() <= right.daysSince0001_1_1();
+       return this->daysSince0001_1_1() <= right.daysSince0001_1_1();
    }
-   bool operator<(const Date& left, const Date& right)
+   bool Date::operator<(const Date& right) const
    {
-       return left.daysSince0001_1_1() < right.daysSince0001_1_1();
+       return this->daysSince0001_1_1() < right.daysSince0001_1_1();
    }
-   bool operator>(const Date& left, const Date& right)
+   bool Date::operator>(const Date& right) const
    {
-       return left.daysSince0001_1_1() > right.daysSince0001_1_1();
+       return this->daysSince0001_1_1() > right.daysSince0001_1_1();
    }
-   int operator-(const Date& left, const Date& right)
+   int Date::operator-(const Date& right) const
    {
-       return left.daysSince0001_1_1() - right.daysSince0001_1_1();
+       return this->daysSince0001_1_1() - right.daysSince0001_1_1();
    }
-   ostream& operator<<(ostream& os, const Date& RO) {
-      return RO.write(os);
+   std::ostream& operator<<(std::ostream& os, const Date& right) {
+      return right.write(os);
    }
-   istream& operator>>(istream& is, Date& RO) {
-      return RO.read(is);
+   std::istream& operator>>(std::istream& is, Date& right) {
+      return right.read(is);
    }
 
 
