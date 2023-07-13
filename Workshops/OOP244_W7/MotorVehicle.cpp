@@ -32,7 +32,7 @@ namespace sdds {
 		{
 			if (strCmp(address, m_address) != 0)
 			{
-				cout << "|" << right << setw(8) << m_plateNum << "| |" << left << setw(20) << m_address << " ---> " << left << setw(20) << address;
+				cout << "|" << right << setw(8) << m_plateNum << "| |" << left << setw(20) << m_address << " ---> " << left << setw(20) << address << "|" << endl;
 				strCpy(m_address, address);
 			}
 		}
@@ -46,8 +46,7 @@ namespace sdds {
 	}
 	std::istream& MotorVehicle::read(std::istream& in)
 	{
-		in.ignore(10000, '\n');
-		cout << "Build year: ";
+		cout << "Built year: ";
 		in >> m_year;
 		in.clear();
 		in.ignore(10000, '\n');
@@ -58,14 +57,18 @@ namespace sdds {
 		cout << "Current location: ";
 		in >> m_address;
 		in.clear();
+
+		return in;
 	}
 	std::ostream& operator<<(std::ostream& os, const MotorVehicle& right)
 	{
 		right.write(os);
+		return os;
 	}
 	std::istream& operator>>(std::istream& is, MotorVehicle& right)
 	{
 		right.read(is);
+		return is;
 	}
 }
 

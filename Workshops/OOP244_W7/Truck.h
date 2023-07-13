@@ -24,11 +24,11 @@ namespace sdds {
 		Truck(const char licensePlate[], const unsigned creationYear, const unsigned capacity, const char address[]);
 		bool addCargo(const double cargo);
 		bool unloadCargo();
-		std::ostream& write(std::ostream& os);
+		std::ostream& write(std::ostream& os) const;
 		std::istream& read(std::istream& in);
 	};
 
 	std::ostream& operator<<(std::ostream& os, const Truck right);
-	std::istream& operator>>(std::istream& is, const Truck right);
+	std::istream& operator>>(std::istream& is, Truck right);
 }
 #endif // !SDDS_TRUCK_H_
