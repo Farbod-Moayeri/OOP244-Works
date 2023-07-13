@@ -32,7 +32,7 @@ namespace sdds {
 		{
 			if (strCmp(address, m_address) != 0)
 			{
-				cout << "|" << right << setw(8) << m_plateNum << "| |" << left << setw(20) << m_address << " ---> " << left << setw(20) << address << "|" << endl;
+				cout << "|" << right << setw(8) << m_plateNum << "| |" << setw(20) << m_address << " ---> " << left << setw(20) << address << "|" << endl;
 				strCpy(m_address, address);
 			}
 		}

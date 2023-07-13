@@ -31,6 +31,11 @@ namespace sdds {
 			m_currentWeight += cargo;
 			changed = true;
 		}
+		else if((m_currentWeight + cargo) > m_maxWeight && m_maxWeight != m_currentWeight)
+		{
+			m_currentWeight = m_maxWeight;
+			changed = true;
+		}
 
 		return changed;
 	}
@@ -65,20 +70,20 @@ namespace sdds {
 		in.clear();
 		in.ignore(10000, '\n');
 		std::cout << "Cargo: ";
-		in >> m_maxWeight;
+		in >> m_currentWeight;
 		in.clear();
 
 		return in;
 
 
 	}
-	std::ostream& operator<<(std::ostream& os, const Truck right)
+	std::ostream& operator<<(std::ostream& os, const Truck& right)
 	{
 		right.write(os);
 
 		return os;
 	}
-	std::istream& operator>>(std::istream& is, Truck right)
+	std::istream& operator>>(std::istream& is, Truck& right)
 	{
 		right.read(is);
 

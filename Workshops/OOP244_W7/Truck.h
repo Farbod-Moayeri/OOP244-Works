@@ -26,9 +26,11 @@ namespace sdds {
 		bool unloadCargo();
 		std::ostream& write(std::ostream& os) const;
 		std::istream& read(std::istream& in);
+		
 	};
 
-	std::ostream& operator<<(std::ostream& os, const Truck right);
-	std::istream& operator>>(std::istream& is, Truck right);
+	std::ostream& operator<<(std::ostream& os, const Truck& right);
+	std::istream& operator>>(std::istream& is, Truck& right);
+	
 }
 #endif // !SDDS_TRUCK_H_
