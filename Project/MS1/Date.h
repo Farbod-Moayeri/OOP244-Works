@@ -38,9 +38,9 @@ namespace sdds {
       int systemYear()const;       // returns the current system year
       bool bad()const;             // return true if
       int mdays()const;            // returns the number of days in current month
-      void setToToday();           // sets the date to the current date (system date)
-   public:
+      void setToToday();  // sets the date to the current date (system date)
       int daysSince0001_1_1()const; // returns number of days passed since the date 0001/1/1
+   public:
       Date();                      // creates a date with current date
       Date(int year, int mon, int day); /* create a date with assigned values
                                          then validates the date and sets the 
@@ -52,16 +52,18 @@ namespace sdds {
       std::ostream& write(std::ostream& os = std::cout)const;
       explicit operator bool()const;
 
+      bool operator==(const Date& right) const;
+      bool operator!=(const Date& right) const;
+      bool operator>=(const Date& right) const;
+      bool operator<=(const Date& right) const;
+      bool operator<(const Date& right) const;
+      bool operator>(const Date& right) const;
+      int operator-(const Date& right) const;
+      
    };
 
-   bool operator==(const Date& left, const Date& right);
-   bool operator!=(const Date& left, const Date& right);
-   bool operator>=(const Date& left, const Date& right);
-   bool operator<=(const Date& left, const Date& right);
-   bool operator<(const Date& left, const Date& right);
-   bool operator>(const Date& left, const Date& right);
-   int operator-(const Date& left, const Date& right);
-   std::ostream& operator<<(std::ostream& os, const Date& RO);
-   std::istream& operator>>(std::istream& is, Date& RO);
+   std::ostream& operator<<(std::ostream& os, const Date& right);
+   std::istream& operator>>(std::istream& is, Date& right);
+  
 }
 #endif
