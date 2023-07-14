@@ -51,13 +51,12 @@ namespace sdds {
 			else if (temp == 4)
 			{
 				returnPub();
-
 			}
 			else if (temp == 0)
 			{
 				if (m_changed == true)
 				{
-					m_exitMenu.run();
+					temp2 = m_exitMenu.run();
 
 					if (temp2 == 1)
 					{
@@ -66,7 +65,7 @@ namespace sdds {
 					}
 					else if (temp2 == 0)
 					{
-						if (confirm("Are you sure you want to quit without saving?") == true)
+						if (confirm("This will discard all the changes are you sure?") == true)
 						{
 							keepRunning = false;
 						}
@@ -78,10 +77,13 @@ namespace sdds {
 				}
 			}
 
+			cout << endl;
+
 
 		}
 
-		cout << "Goodbye...";
+		cout << "-------------------------------------------" << endl;
+		cout << "Thanks for using Seneca Library Application" << endl;
 	}
 	bool LibApp::confirm(const char* message)
 	{
@@ -90,7 +92,7 @@ namespace sdds {
 		if (message != nullptr)
 		{
 			Menu local(message);
-			local << "yes";
+			local << "Yes";
 			if (local.run() == 1)
 			{
 				isit = true;
@@ -101,15 +103,16 @@ namespace sdds {
 	}
 	void LibApp::load()
 	{
-		cout << "Loading Date" << endl;
+		cout << "Loading Data" << endl;
 	}
 	void LibApp::save()
 	{
-		cout << "Saving Date" << endl;
+		cout << "Saving Data" << endl;
+		m_changed = false;
 	}
 	void LibApp::search()
 	{
-		cout << "Seaching for publication" << endl;
+		cout << "Searching for publication" << endl;
 	}
 	void LibApp::returnPub()
 	{
@@ -131,7 +134,8 @@ namespace sdds {
 	void LibApp::removePublication()
 	{
 		cout << "Removing publication from library" << endl;
-		if (confirm("Remove this publication from library?") == true)
+		search();
+		if (confirm("Remove this publication from the library?") == true)
 		{
 			m_changed = true;
 			cout << "Publication removed" << endl;
