@@ -1,0 +1,22 @@
+///////////////////////////////////////////////////////////////////////////
+
+                              
+                             Workshop - #7
+Full Name  : Farbod Moayeri
+Student ID#: 134395227
+Email      : fmoayeri2@myseneca.ca
+Section    : NBB
+
+Authenticity Declaration:
+
+I declare this submission is the result of my own work and has not been
+shared with any other student or 3rd party content provider. This submitted
+piece of work is entirely of my own creation.
+///////////////////////////////////////////////////////////////////////////
+
+
+This workshop allowed me to get familiar with the concept of inheritance and it taught me how to use the base classes constructor using the
+derived class's constructor. I also learned about using a constructor initialization list which helps make your code cleaner and easier to
+read. I also learned how to use qualified function calls to call the base classes functions. This is especially useful when your derived
+class and your base class have member methods that have the same name. Normally, your derived classes member methods are invoked first, so
+you use scope resolution, i.e a qualified member method call, to resolve the scope you want. That is about all I learned this workshop.
