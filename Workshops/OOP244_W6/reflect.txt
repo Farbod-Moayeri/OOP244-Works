@@ -15,3 +15,11 @@ piece of work is entirely of my own creation.
 ///////////////////////////////////////////////////////////////////////////
 
 
+This workshop allowed me to get familiar with the rule of 3. I created a constructor, a copy constructor and copy assignment
+for the object TextFile. I properly defined my constructors, in which there were three. And then I got to work on my copy constructor,
+which caused me alot of trouble with valgrind later on. Then I created my copy assignment operator overload. Once I had created
+all my member functions and gotten my program working, I encountered alot of memory errors. I ended up fixing all the memory errors I could
+find by using Visual Studio, but there was one pervasive memory problem which didnt cause leaks but caused a bounding error instead. I
+spent hours and hours trying to find the bug and I eventually found it. It wasnt an error on my rule of three members, it was a logical
+error in my strCat function that was causing a cascading effect when it came to my copy constructor creating copy's of the names of the
+text files. StrCat would basically read a character outside of the memory of my program and would cause valgrind to go crazy.
