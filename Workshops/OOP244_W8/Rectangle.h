@@ -13,7 +13,6 @@ namespace sdds {
 
 		~Rectangle() {};
 
-
 	};
 }
 #endif // !SDDS_RECTANGLE_H
