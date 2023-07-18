@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////
-// Workshop 4
+// Workshop 8
 // Name: Farbod Moayeri
 // Id: 134395227
 // Email: fmoayeri2@myseneca.ca
@@ -42,6 +42,7 @@ namespace sdds {
 
 	// Concantinates "src" C-string to the end of "des"
 	void strCat(char* des, const char* src);
+
 
 }
 #endif
