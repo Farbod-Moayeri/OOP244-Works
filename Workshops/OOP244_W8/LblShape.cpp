@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 ///////////////////////////////////////////////////////
 // Workshop 8
 // Name: Farbod Moayeri
@@ -11,23 +13,24 @@
 
 #include <iostream>
 #include <string>
-#include "cstring.h"
+#include <cstring>
+//#include "cstring.h" doesnt work for whatever reason, wierd linking errors
 #include "LblShape.h"
 
 namespace sdds {
 
 
-    char* LblShape::label() const
+    const char* LblShape::label() const
     {
         return m_label;
     }
 
-    LblShape::LblShape(char string[])
+    LblShape::LblShape(const char string[])
     {
         if (string != nullptr)
         {
-            m_label = new char[strLen(string) + 1];
-            strCpy(m_label, string);
+            m_label = new char[strlen(string) + 1];
+            strcpy(m_label, string);
         }
     }
 
@@ -49,8 +52,8 @@ namespace sdds {
         if (buf == ',')
         {
             delete[] m_label;
-            m_label = new char[strLen(input.c_str()) + 1];
-            strCpy(m_label, input.c_str());
+            m_label = new char[strlen(input.c_str()) + 1];
+            strcpy(m_label, input.c_str());
         }
         
     }

@@ -19,7 +19,7 @@ namespace sdds {
 		m_length = 0;
 	}
 
-	Line::Line(char string[], const int length) : LblShape::LblShape(string)
+	Line::Line(const char string[], const int length) : LblShape::LblShape(string)
 	{
 		m_length = length;
 	}
@@ -31,7 +31,7 @@ namespace sdds {
 		is.ignore(10000, '\n');
 	}
 
-	void Line::draw(std::ostream& os)
+	void Line::draw(std::ostream& os) const
 	{
 		int i{};
 

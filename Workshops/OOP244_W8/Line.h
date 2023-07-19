@@ -19,12 +19,11 @@ namespace sdds {
 	class Line : public LblShape
 	{
 		int m_length{};
+	public:
 		Line();
-		Line(char string[], const int length);
-		virtual ~Line() {};
+		Line(const char string[], const int length);
 		void getSpecs(std::istream& is);
-		void draw(std::ostream& os);
-
+		void draw(std::ostream& os) const;
 	};
 }
 #endif // !SDDS_LINE_H

@@ -13,12 +13,14 @@
 
 namespace sdds {
 
-    std::ostream& sdds::operator<<(std::ostream& left, const Shape& right)
+    std::ostream& operator<<(std::ostream& left, const Shape& right)
     {
         right.draw(left);
+        return left;
     }
-    std::istream& operator>>(Shape& left, std::istream& right)
+    std::istream& operator>>(std::istream& left, Shape& right)
     {
-        left.getSpecs(right);
+        right.getSpecs(left);
+        return left;
     }
 }
