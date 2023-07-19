@@ -15,4 +15,10 @@ piece of work is entirely of my own creation.
 ///////////////////////////////////////////////////////////////////////////
 
 
-This workshop allowed me to understand vitual functions
+This workshop allowed me to understand vitual member methods and virtual classes (templates). It allowed me to understand how to utilize
+abstract classes that are either entirely abstract like the Shape class (making it an interface) or only partially abstract like the LblShape
+class. It allowed me to understand how the virtual keyword functioned when it came to postponing the binding of member method signatures to
+definitions. When you place 'virtual' infront of a methods signature, it tells the compiler to wait for other definitions of the signature to
+show up, and if a signature shows up thats of a dirived class, it will use that one. 
+
+Overall, I learned how a multi-nested derived class functions using its base classes resources and member methods, either directly or indirectly.
