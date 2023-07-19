@@ -8,13 +8,13 @@ namespace sdds {
 	const int MAX_LENGTH = 255;
 	class Publication : public Streamable{
 		char* m_title{};
-		char m_shelfId[4 + 1]{};
+		char m_shelfId[SDDS_SHELF_ID_LEN + 1]{};
 		int m_membership{};
 		int m_libRef{ -1 };
 		Date m_date{};
 	public:
 		Publication() {};
-		~Publication() { delete[] m_title; };
+		~Publication();
 		Publication(const Publication& inc) = delete;
 		Publication& operator=(const Publication& inc) = delete;
 
