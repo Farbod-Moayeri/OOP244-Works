@@ -36,7 +36,7 @@ namespace sdds {
 		bool operator==(const char* title)const;
 		// Returns true if the argument title appears anywhere in the title of the 
 		// publication. Otherwise, it returns false; (use strstr() function in <cstring>)
-		operator const char* ()const;
+		operator const char* const()const;
 		// Returns the title attribute
 		int getRef()const;
 		// Returns the libRef attirbute. 

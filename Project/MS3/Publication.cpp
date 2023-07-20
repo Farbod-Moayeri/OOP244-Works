@@ -9,7 +9,7 @@ namespace sdds {
 	Publication::~Publication()
 	{
 		delete[] m_title;
-		m_title = nullptr;
+		//m_title = nullptr;S
 	}
 	Publication::Publication(const Publication& inc)
 	{
@@ -23,7 +23,7 @@ namespace sdds {
 	Publication& Publication::operator=(const Publication& inc)
 	{
 		
-		if (this != &inc) 
+		if (this != &inc && inc != nullptr) 
 		{
 			delete[] m_title;
 			m_title = new char[strlen(inc) + 1];
@@ -92,7 +92,7 @@ namespace sdds {
 
 		return isit;
 	}
-	Publication::operator const char* () const
+	Publication::operator const char* const() const
 	{
 		return m_title;
 	}
@@ -121,23 +121,26 @@ namespace sdds {
 	}
 	std::ostream& Publication::write(std::ostream& os) const
 	{
-		if (conIO(os))
+		if (*this != nullptr)
 		{
-			os << "| " << std::setw(SDDS_SHELF_ID_LEN) << m_shelfId << " | " << std::left << std::setw(SDDS_TITLE_WIDTH)
-				<< std::setfill('.') << m_title << std::setfill(' ') << " | " << std::setw(5);
-			if (m_membership != 0)
+			if (conIO(os))
 			{
-				os << m_membership;
+				os << "| " << std::setw(SDDS_SHELF_ID_LEN) << m_shelfId << " | " << std::left << std::setw(SDDS_TITLE_WIDTH)
+					<< std::setfill('.') << m_title << std::setfill(' ') << " | " << std::setw(5);
+				if (m_membership != 0)
+				{
+					os << m_membership;
+				}
+				else
+				{
+					os << "N/A";
+				}
+				os << " | " << std::setw(10) << m_date << " | ";
 			}
 			else
 			{
-				os << "N/A";
+				os << type() << '\t' << m_libRef << '\t' << m_shelfId << '\t' << m_title << '\t' << m_membership << '\t' << m_date;
 			}
-				os << " | " << std::setw(10) << m_date << " | ";
-		}
-		else
-		{
-			os << type() << '\t' << m_libRef << '\t' << m_shelfId << '\t' << m_title << '\t' << m_membership << '\t' << m_date;
 		}
 
 		return os;
@@ -149,6 +152,7 @@ namespace sdds {
 		int localMembership{};
 		int localLibRef = -1;
 		Date localDate{};
+		char buf;
 		
 		delete[] m_title;
 		m_title = nullptr;
@@ -160,14 +164,16 @@ namespace sdds {
 		if (conIO(is))
 		{
 			std::cout << "Shelf No: ";
-			is.getline(localShelfId, SDDS_SHELF_ID_LEN);
-			if (is.get() != '\n')
+			is.getline(localShelfId, SDDS_SHELF_ID_LEN); // check how getline works
+			buf = is.get();
+			if (buf != '\n')
 			{
 				is.setstate(std::ios_base::failbit);
 			}
-			// is.ignore(10000, '\n');
+			std::cout << "Title: ";
 			is.getline(localTitle, SDDS_TITLE_WIDTH);
 			is.ignore(10000, '\n');
+			std::cout << "Date: ";
 			localDate.read(is);
 			if (localDate.errCode() != 0)
 			{
