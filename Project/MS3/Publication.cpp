@@ -1,14 +1,39 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <cstring>
 #include <iomanip>
 #include <string>
 #include "Publication.h"
-#include "Lib.h"
+
 
 namespace sdds {
 	Publication::~Publication()
 	{
 		delete[] m_title;
 		m_title = nullptr;
+	}
+	Publication::Publication(const Publication& inc)
+	{
+		// might be good to validate inc?
+		m_title = new char[strlen(inc) + 1];
+		strcpy(m_title, inc);
+		strcpy(m_shelfId, inc.getShelf());
+		m_membership = inc.getMem();
+		m_date = inc.checkoutDate();
+	}
+	Publication& Publication::operator=(const Publication& inc)
+	{
+		
+		if (this != &inc) 
+		{
+			delete[] m_title;
+			m_title = new char[strlen(inc) + 1];
+			strcpy(m_title, inc);
+			strcpy(m_shelfId, inc.getShelf());
+			m_membership = inc.getMem();
+			m_date = inc.checkoutDate();
+		}
+
+		return *this;
 	}
 	void Publication::set(int member_id)
 	{
@@ -75,6 +100,14 @@ namespace sdds {
 	{
 		return m_libRef;
 	}
+	const char* Publication::getShelf() const
+	{
+		return m_shelfId;
+	}
+	int Publication::getMem() const
+	{
+		return m_membership;
+	}
 	bool Publication::conIO(std::ios& io) const
 	{
 		bool isit = false;
@@ -135,13 +168,42 @@ namespace sdds {
 			// is.ignore(10000, '\n');
 			is.getline(localTitle, SDDS_TITLE_WIDTH);
 			is.ignore(10000, '\n');
-			m_date.read();
+			localDate.read(is);
+			if (localDate.errCode() != 0)
+			{
+				is.setstate(std::ios_base::failbit);
+			}
 			is.ignore(10000, '\n');
 		}
 		else
 		{
-
+			// change this to ensure is.get does break
+			is >> localLibRef;
+			while (is.get() != '\t') {}
+			is.getline(localShelfId, SDDS_SHELF_ID_LEN);
+			while (is.get() != '\t') {}
+			is.getline(localTitle, SDDS_TITLE_WIDTH);
+			while (is.get() != '\t') {}
+			is >> localMembership;
+			while (is.get() != '\t') {}
+			localDate.read(is);
+			if (localDate.errCode() != 0)
+			{
+				is.setstate(std::ios_base::failbit);
+			}
 		}
+
+		if (is.good())
+		{
+			m_title = new char[strlen(localTitle) + 1];
+			strcpy(m_title, localTitle);
+			strcpy(m_shelfId, localShelfId);
+			m_membership = localMembership;
+			m_date = localDate;
+			m_libRef = localLibRef;
+		}
+
+		return is;
 	}
 	Publication::operator bool() const
 	{

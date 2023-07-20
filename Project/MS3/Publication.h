@@ -3,9 +3,11 @@
 
 #include "Date.h"
 #include "Streamable.h"
+#include "Lib.h"
 
 namespace sdds {
 	const int MAX_LENGTH = 255;
+
 	class Publication : public Streamable{
 		char* m_title{};
 		char m_shelfId[SDDS_SHELF_ID_LEN + 1]{};
@@ -15,8 +17,8 @@ namespace sdds {
 	public:
 		Publication() {};
 		~Publication();
-		Publication(const Publication& inc) = delete;
-		Publication& operator=(const Publication& inc) = delete;
+		Publication(const Publication& inc);
+		Publication& operator=(const Publication& inc);
 
 		virtual void set(int member_id);
 		// Sets the membership attribute to either zero or a five-digit integer.
@@ -38,6 +40,8 @@ namespace sdds {
 		// Returns the title attribute
 		int getRef()const;
 		// Returns the libRef attirbute. 
+		const char* getShelf() const;
+		int getMem() const;
 
 		bool conIO(std::ios& io)const;
 		std::ostream& write(std::ostream& os) const;

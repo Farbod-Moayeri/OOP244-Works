@@ -48,4 +48,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="PeriodicalsOriginal.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="Periodicals.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+  </ItemGroup>
 </Project>

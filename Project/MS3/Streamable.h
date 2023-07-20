@@ -15,7 +15,7 @@ namespace sdds {
 		~Streamable() {};
 	};
 
-	const Streamable& operator<<(std::ostream& left, const Streamable& right);
-	Streamable& operator>>(std::istream& left, Streamable& right);
+	std::ostream& operator<<(std::ostream& left, const Streamable& right);
+	std::istream& operator>>(std::istream& left, Streamable& right);
 }
 #endif // !SDDS_STREAMABLE_H

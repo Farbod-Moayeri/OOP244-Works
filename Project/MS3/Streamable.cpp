@@ -13,17 +13,17 @@ namespace sdds {
         return isit;
     }
 
-    const Streamable& operator<<(std::ostream& left, const Streamable& right)
+    std::ostream& operator<<(std::ostream& left, const Streamable& right)
     {
         right.write(left);
 
-        return right;
+        return left;
     }
 
-    Streamable& operator>>(std::istream& left, Streamable& right)
+    std::istream& operator>>(std::istream& left, Streamable& right)
     {
         right.read(left);
 
-        return right;
+        return left;
     }
 }
