@@ -1,3 +1,15 @@
+///////////////////////////////////////////////////////
+// MS3
+// Name: Farbod Moayeri
+// Id: 134395227
+// Email: fmoayeri2@myseneca.ca
+// Section: NBB
+///////////////////////////////////////////////////////
+// I have done all the coding by myself and only copied
+// the code that my professor provided to complete my 
+// workshops and assignments.
+///////////////////////////////////////////////////////
+
 #ifndef SDDS_PUBLICATION_H
 #define SDDS_PUBLICATION_H
 
@@ -6,7 +18,7 @@
 #include "Lib.h"
 
 namespace sdds {
-	const int MAX_LENGTH = 255;
+	const int MAX_LENGTH_TITLE = 255;
 
 	class Publication : public Streamable{
 		char* m_title{};
@@ -15,37 +27,44 @@ namespace sdds {
 		int m_libRef{ -1 };
 		Date m_date{};
 	public:
-		Publication() {};
+		Publication() = default;
+
+		// RULE OF THREE
 		~Publication();
 		Publication(const Publication& inc);
 		Publication& operator=(const Publication& inc);
-
-		virtual void set(int member_id);
+		// RULE OF THREE
+		
 		// Sets the membership attribute to either zero or a five-digit integer.
-		void setRef(int value);
+		virtual void set(int member_id);
 		// Sets the **libRef** attribute value
-		void resetDate();
+		void setRef(int value);
 		// Sets the date to the current date of the system.
-
-		virtual char type()const;
+		void resetDate();
 		// Returns the character 'P' to identify this object as a "Publication object"
-		bool onLoan()const;
+		virtual char type()const;
 		// Returns true is the publication is checkout (membership is non-zero)
-		Date checkoutDate()const;
+		bool onLoan()const;
 		// Returns the date attribute
-		bool operator==(const char* title)const;
+		Date checkoutDate()const;
 		// Returns true if the argument title appears anywhere in the title of the 
 		// publication. Otherwise, it returns false; (use strstr() function in <cstring>)
-		operator const char* const()const;
+		bool operator==(const char* title)const;
 		// Returns the title attribute
-		int getRef()const;
+		operator const char* const()const;
 		// Returns the libRef attirbute. 
-		const char* getShelf() const;
+		int getRef()const;
+		// returns the shelfId attribute
+		const char* const getShelf() const;
+		// returns the membership attribute
 		int getMem() const;
-
+		// Returns true if the address of the io object is the same as the address of either the cin object or the cout object.
 		bool conIO(std::ios& io)const;
+		// writes onto source the publication
 		std::ostream& write(std::ostream& os) const;
+		// reads from the source the publication
 		std::istream& read(std::istream& is);
+		// returns true if shelfId and shelfTitle are valid 
 		operator bool() const;
 		
 	};

@@ -1,25 +1,44 @@
+///////////////////////////////////////////////////////
+// MS3
+// Name: Farbod Moayeri
+// Id: 134395227
+// Email: fmoayeri2@myseneca.ca
+// Section: NBB
+///////////////////////////////////////////////////////
+// I have done all the coding by myself and only copied
+// the code that my professor provided to complete my 
+// workshops and assignments.
+///////////////////////////////////////////////////////
+
 #define _CRT_SECURE_NO_WARNINGS
-#include <cstring>
+#include <cstring> 
 #include <iomanip>
 #include <string>
+
+using namespace std;
 #include "Publication.h"
 
-
 namespace sdds {
+
 	Publication::~Publication()
 	{
 		delete[] m_title;
 		//m_title = nullptr;S
 	}
+
 	Publication::Publication(const Publication& inc)
 	{
 		// might be good to validate inc?
-		m_title = new char[strlen(inc) + 1];
-		strcpy(m_title, inc);
-		strcpy(m_shelfId, inc.getShelf());
-		m_membership = inc.getMem();
-		m_date = inc.checkoutDate();
+		if (inc != nullptr)
+		{
+			m_title = new char[strlen(inc) + 1];
+			strcpy(m_title, inc);
+			strcpy(m_shelfId, inc.getShelf());
+			m_membership = inc.getMem();
+			m_date = inc.checkoutDate();
+		}
 	}
+
 	Publication& Publication::operator=(const Publication& inc)
 	{
 		
@@ -35,6 +54,8 @@ namespace sdds {
 
 		return *this;
 	}
+
+	// Sets the membership attribute to either zero or a five-digit integer.
 	void Publication::set(int member_id)
 	{
 		if (m_membership == 0 && member_id > 9999 && member_id < 100000)
@@ -43,6 +64,7 @@ namespace sdds {
 		}
 	}
 
+	// Sets the **libRef** attribute value
 	void Publication::setRef(int value)
 	{
 		if (value > -1 && m_libRef == -1)
@@ -51,16 +73,19 @@ namespace sdds {
 		}
 	}
 
+	// Sets the date to the current date of the system.
 	void Publication::resetDate()
 	{
 		m_date.setToToday();
 	}
 
+	// Returns the character 'P' to identify this object as a "Publication object"
 	char Publication::type() const
 	{
 		return 'P';
 	}
 
+	// Returns true is the publication is checkout (membership is non-zero)
 	bool Publication::onLoan() const
 	{
 		bool isit = false;
@@ -73,11 +98,14 @@ namespace sdds {
 		return isit;
 	}
 
+	// Returns the date attribute
 	Date Publication::checkoutDate() const
 	{
 		return m_date;
 	}
 
+	// Returns true if the argument title appears anywhere in the title of the 
+	// publication. Otherwise, it returns false; (use strstr() function in <cstring>)
 	bool Publication::operator==(const char* title) const
 	{
 		bool isit = false;
@@ -92,50 +120,60 @@ namespace sdds {
 
 		return isit;
 	}
+
+	// Returns the title attribute
 	Publication::operator const char* const() const
 	{
 		return m_title;
 	}
+
+	// Returns the libRef attirbute. 
 	int Publication::getRef() const
 	{
 		return m_libRef;
 	}
-	const char* Publication::getShelf() const
+
+	// returns the shelfId attribute
+	const char* const Publication::getShelf() const
 	{
 		return m_shelfId;
 	}
+
+	// returns the membership attribute
 	int Publication::getMem() const
 	{
 		return m_membership;
 	}
-	bool Publication::conIO(std::ios& io) const
+	// Returns true if the address of the io object is the same as the address of either the cin object or the cout object.
+	bool Publication::conIO(ios& io) const
 	{
 		bool isit = false;
 
-		if (&io == &std::cout || &io == &std::cin)
+		if (&io == &cout || &io == &cin)
 		{
 			isit = true;
 		}
 
 		return isit;
 	}
-	std::ostream& Publication::write(std::ostream& os) const
+	// writes onto source the publication
+	ostream& Publication::write(ostream& os) const
 	{
 		if (*this != nullptr)
 		{
 			if (conIO(os))
 			{
-				os << "| " << std::setw(SDDS_SHELF_ID_LEN) << m_shelfId << " | " << std::left << std::setw(SDDS_TITLE_WIDTH)
-					<< std::setfill('.') << m_title << std::setfill(' ') << " | " << std::setw(5);
+				os << "| " << setw(SDDS_SHELF_ID_LEN) << m_shelfId << " | " << left << setw(SDDS_TITLE_WIDTH)
+					<< setfill('.') << m_title << setfill(' ') << " | " << setw(5);
 				if (m_membership != 0)
 				{
 					os << m_membership;
 				}
 				else
 				{
-					os << "N/A";
+					os  << " N/A ";
 				}
-				os << " | " << std::setw(10) << m_date << " | ";
+				os << " | " << m_date << " |";
 			}
 			else
 			{
@@ -145,7 +183,8 @@ namespace sdds {
 
 		return os;
 	}
-	std::istream& Publication::read(std::istream& is)
+	// reads from the source the publication
+	istream& Publication::read(istream& is)
 	{
 		char localTitle[SDDS_TITLE_WIDTH + 1];
 		char localShelfId[SDDS_SHELF_ID_LEN + 1]{};
@@ -163,39 +202,38 @@ namespace sdds {
 
 		if (conIO(is))
 		{
-			std::cout << "Shelf No: ";
-			is.getline(localShelfId, SDDS_SHELF_ID_LEN); // check how getline works
+			cout << "Shelf No: ";
+			is.get(localShelfId, SDDS_SHELF_ID_LEN + 1, '\n'); // check how getline works
 			buf = is.get();
 			if (buf != '\n')
 			{
-				is.setstate(std::ios_base::failbit);
+				is.setstate(ios_base::failbit);
 			}
-			std::cout << "Title: ";
-			is.getline(localTitle, SDDS_TITLE_WIDTH);
+			cout << "Title: ";
+			is.get(localTitle, SDDS_TITLE_WIDTH + 1, '\n');
 			is.ignore(10000, '\n');
-			std::cout << "Date: ";
+			cout << "Date: ";
 			localDate.read(is);
 			if (localDate.errCode() != 0)
 			{
-				is.setstate(std::ios_base::failbit);
+				is.setstate(ios_base::failbit);
 			}
 			is.ignore(10000, '\n');
 		}
 		else
 		{
-			// change this to ensure is.get does break
 			is >> localLibRef;
-			while (is.get() != '\t') {}
-			is.getline(localShelfId, SDDS_SHELF_ID_LEN);
-			while (is.get() != '\t') {}
-			is.getline(localTitle, SDDS_TITLE_WIDTH);
-			while (is.get() != '\t') {}
+			is.get();
+			is.get(localShelfId, SDDS_SHELF_ID_LEN + 1, '\t');
+			is.get();
+			is.get(localTitle, SDDS_TITLE_WIDTH + 1, '\t');
+			is.get();
 			is >> localMembership;
-			while (is.get() != '\t') {}
+			is.get();
 			localDate.read(is);
 			if (localDate.errCode() != 0)
 			{
-				is.setstate(std::ios_base::failbit);
+				is.setstate(ios_base::failbit);
 			}
 		}
 
@@ -211,6 +249,7 @@ namespace sdds {
 
 		return is;
 	}
+	// returns true if shelfId and shelfTitle are valid 
 	Publication::operator bool() const
 	{
 		bool isit = false;

@@ -107,7 +107,7 @@ namespace sdds {
    int Date::errCode()const {
        return m_ErrorCode;
    }
-   const char* Date::dateStatus()const {
+   const char* const Date::dateStatus()const {
       return DATE_ERROR[errCode()];
    }
    int Date::currentYear()const {
@@ -232,6 +232,8 @@ namespace sdds {
    {
        return this->daysSince0001_1_1() - right.daysSince0001_1_1();
    }
+
+
    std::ostream& operator<<(std::ostream& os, const Date& right) {
       return right.write(os);
    }

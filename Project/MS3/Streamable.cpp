@@ -1,7 +1,20 @@
+///////////////////////////////////////////////////////
+// MS3
+// Name: Farbod Moayeri
+// Id: 134395227
+// Email: fmoayeri2@myseneca.ca
+// Section: NBB
+///////////////////////////////////////////////////////
+// I have done all the coding by myself and only copied
+// the code that my professor provided to complete my 
+// workshops and assignments.
+///////////////////////////////////////////////////////
+
+using namespace std;
 #include "Streamable.h"
 
 namespace sdds {
-    bool Streamable::conIO(const std::ios& ios)
+    bool Streamable::conIO(const ios& ios)
     {
         bool isit = false;
 
@@ -13,14 +26,14 @@ namespace sdds {
         return isit;
     }
 
-    std::ostream& operator<<(std::ostream& left, const Streamable& right)
+    ostream& operator<<(ostream& left, const Streamable& right)
     {
         right.write(left);
 
         return left;
     }
 
-    std::istream& operator>>(std::istream& left, Streamable& right)
+    istream& operator>>(istream& left, Streamable& right)
     {
         right.read(left);
 
