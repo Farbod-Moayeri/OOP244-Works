@@ -1,9 +1,8 @@
 ///////////////////////////////////////////////////////
-// Workshop 9
+// Workshop 8
 // Name: Farbod Moayeri
 // Id: 134395227
 // Email: fmoayeri2@myseneca.ca
-// Section: NBB
 ///////////////////////////////////////////////////////
 // I have done all the coding by myself and only copied
 // the code that my professor provided to complete my 
@@ -224,13 +223,14 @@ namespace sdds {
 
 			for (j = 0; src[j] != '\0'; j++)
 			{
+				
 				des[i + j] = src[j];
+				
 			}
 
-			if (src[i + j] != '\0')
-			{
-				des[i + j] = '\0';
-			}
+			
+			des[i + j] = '\0';
+			// doot
 		}
 	}
 

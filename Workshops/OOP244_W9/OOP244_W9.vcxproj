@@ -135,11 +135,13 @@
     <None Include="dcwrOutput.html" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Project\MS3\cstring.cpp" />
     <ClCompile Include="HtmlText.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="w9Tester_prof.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Project\MS3\cstring.h" />
     <ClInclude Include="HtmlText.h" />
     <ClInclude Include="Text.h" />
   </ItemGroup>

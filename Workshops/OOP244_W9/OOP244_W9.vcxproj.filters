@@ -40,12 +40,18 @@
     <ClCompile Include="w9Tester_prof.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Project\MS3\cstring.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HtmlText.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Text.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Project\MS3\cstring.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
