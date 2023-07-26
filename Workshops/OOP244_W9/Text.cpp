@@ -83,7 +83,7 @@ namespace sdds {
 
    void Text::read()
    {
-
+       char d = 'a';
        int i{};
        delete[] m_content;
        m_content = nullptr;
@@ -93,7 +93,15 @@ namespace sdds {
            m_content = new char(getFileLength() + 1);
            ifstream fin(m_filename);
 
-           fin.get(m_content, '\0');
+           //fin.get(m_content, '\0');
+
+           for (i = 0; d != '\0'; i++)
+           {
+              d = fin.get();
+              m_content[i] = d;
+           }
+
+           fin.close();
        }
        else
        {

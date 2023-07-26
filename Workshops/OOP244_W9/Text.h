@@ -21,7 +21,7 @@ namespace sdds {
       char* m_content{};
       int getFileLength()const;
    protected:
-      const char& operator[](int index)const;
+      virtual const char& operator[](int index)const;
    public:
       virtual Text& setEmpty();
       Text(const char* filename=nullptr);

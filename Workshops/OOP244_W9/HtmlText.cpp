@@ -80,6 +80,38 @@ namespace sdds {
 			os << "<h1>" << m_title << "</h1>\n";
 		}
 
+		for (int i = 0; m_content[i] != '\0'; i++)
+    {
+        switch (m_content[i])
+        {
+        case '<':
+            os << "&lt;";
+            break;
+        case '>':
+            os << "&gt;";
+            break;
+        case '\n':
+            os << "<br />\n";
+            break;
+        case ' ':
+            if (!ms)
+            {
+                os << ' ';
+                ms = true;
+            }
+            else
+            {
+                os << "&nbsp;";
+            }
+            break;
+        default:
+            os << m_content[i];
+            ms = false;
+            break;
+        }
+    }
+
+    os << "</body></html>\n";
 		
 	}
 }
