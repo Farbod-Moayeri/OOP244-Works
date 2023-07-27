@@ -66,12 +66,15 @@ namespace sdds {
        delete[] m_filename;
        m_filename = nullptr;
 
-       if (inc.m_filename != nullptr && inc.m_content != nullptr)
+       if (this != &inc)
        {
-           m_filename = new char[strLen(inc.m_filename) + 1];
-           strCpy(m_filename, inc.m_filename);
-           m_content = new char[strLen(inc.m_content) + 1];
-           strCpy(m_content, inc.m_content);
+           if (inc.m_filename != nullptr && inc.m_content != nullptr)
+           {
+               m_filename = new char[strLen(inc.m_filename) + 1];
+               strCpy(m_filename, inc.m_filename);
+               m_content = new char[strLen(inc.m_content) + 1];
+               strCpy(m_content, inc.m_content);
+           }
        }
    }
 

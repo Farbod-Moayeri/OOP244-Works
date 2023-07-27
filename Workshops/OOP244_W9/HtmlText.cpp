@@ -51,11 +51,18 @@ namespace sdds {
 	}
 	HtmlText& HtmlText::operator=(const HtmlText& inc)
 	{
-		Text::operator=(inc);
-		if (inc.m_title != nullptr)
+		if (this != &inc)
 		{
-			m_title = new char[strLen(inc.m_title) + 1];
-			strCpy(m_title, inc.m_title);
+			Text::operator=(inc);
+			if (inc.m_title != nullptr)
+			{
+				m_title = new char[strLen(inc.m_title) + 1];
+				strCpy(m_title, inc.m_title);
+			}
+			else
+			{
+				setEmpty();
+			}
 		}
 	}
 	void HtmlText::write(std::ostream& os) const
@@ -80,36 +87,36 @@ namespace sdds {
 			os << "<h1>" << m_title << "</h1>\n";
 		}
 
-		for (int i = 0; m_content[i] != '\0'; i++)
-    {
-        switch (m_content[i])
-        {
-        case '<':
-            os << "&lt;";
-            break;
-        case '>':
-            os << "&gt;";
-            break;
-        case '\n':
-            os << "<br />\n";
-            break;
-        case ' ':
-            if (!ms)
-            {
-                os << ' ';
-                ms = true;
-            }
-            else
-            {
-                os << "&nbsp;";
-            }
-            break;
-        default:
-            os << m_content[i];
-            ms = false;
-            break;
-        }
-    }
+		for (int i = 0;  != '\0'; i++)
+		{
+			switch (m_content[i])
+			{
+			case '<':
+				os << "&lt;";
+				break;
+			case '>':
+				os << "&gt;";
+				break;
+			case '\n':
+				os << "<br />\n";
+				break;
+			case ' ':
+				if (!ms)
+				{
+					os << ' ';
+					ms = true;
+				}
+				else
+				{
+					os << "&nbsp;";
+				}
+				break;
+			default:
+				os << m_content[i];
+				ms = false;
+				break;
+			}
+		}
 
     os << "</body></html>\n";
 		

@@ -14,7 +14,7 @@
 #define SDDS_HTMLTEXT_H__
 #include "Text.h"
 namespace sdds {
-   class HtmlText :  public Text {
+   class HtmlText : public Text {
       char* m_title{};
       virtual HtmlText& setEmpty();
    public:
