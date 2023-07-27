@@ -9,8 +9,9 @@
 // the code that my professor provided to complete my 
 // workshops and assignments.
 ///////////////////////////////////////////////////////
-
+//#define _CRT_SECURE_NO_WARNINGS
 #include <fstream>
+//#include <cstring>
 #include "Text.h"
 #include "cstring.h"
 
@@ -37,6 +38,8 @@ namespace sdds {
        m_filename = nullptr;
        delete[] m_content;
        m_content = nullptr;
+
+       return *this;
    }
 
    Text::Text(const char* filename)
@@ -45,37 +48,55 @@ namespace sdds {
        {
            m_filename = new char[strLen(filename) + 1];
            strCpy(m_filename, filename);
+           read();
        }
    }
 
    Text::Text(const Text& inc)
    {
-       if (inc.m_filename != nullptr && inc.m_content != nullptr)
+       if (inc.m_filename != nullptr)
        {
            m_filename = new char[strLen(inc.m_filename) + 1];
            strCpy(m_filename, inc.m_filename);
-           m_content = new char[strLen(inc.m_content) + 1];
-           strCpy(m_content, inc.m_content);
+           if (inc.m_content != nullptr)
+           {
+               m_content = new char[strLen(inc.m_content) + 1];
+               strCpy(m_content, inc.m_content);
+           }
+           //read();
        }
    }
 
    Text& Text::operator=(const Text& inc)
    {
-       delete[] m_content;
-       m_content = nullptr;
-       delete[] m_filename;
-       m_filename = nullptr;
-
        if (this != &inc)
        {
-           if (inc.m_filename != nullptr && inc.m_content != nullptr)
+           if (m_filename != nullptr)
+           {
+               delete[] m_filename;
+               m_filename = nullptr;
+           }
+           
+           if (m_content != nullptr)
+           {
+               delete[] m_content;
+               m_content = nullptr;
+           }
+
+           if (inc.m_filename != nullptr)
            {
                m_filename = new char[strLen(inc.m_filename) + 1];
                strCpy(m_filename, inc.m_filename);
-               m_content = new char[strLen(inc.m_content) + 1];
-               strCpy(m_content, inc.m_content);
+               if (inc.m_content != nullptr)
+               {
+                   m_content = new char[strLen(inc.m_content) + 1];
+                   strCpy(m_content, inc.m_content);
+               }
+               //read();
            }
        }
+
+       return *this;
    }
 
    Text::~Text()
@@ -87,23 +108,21 @@ namespace sdds {
    void Text::read()
    {
        char d = 'a';
-       int i{};
-       delete[] m_content;
-       m_content = nullptr;
+       int i{0};
 
        if (m_filename != nullptr)
        {
-           m_content = new char(getFileLength() + 1);
+           
+           m_content = new char[getFileLength() + 1];
            ifstream fin(m_filename);
 
-           //fin.get(m_content, '\0');
-
-           for (i = 0; d != '\0'; i++)
+           while (fin.get(d))
            {
-              d = fin.get();
-              m_content[i] = d;
+               m_content[i] = d;
+               i++;
            }
 
+           m_content[i] = '\0';
            fin.close();
        }
        else

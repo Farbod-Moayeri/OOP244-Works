@@ -131,6 +131,7 @@
     <Text Include="dcwrLittle.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="dcwr.html" />
     <None Include="dcwrLittleOutput.html" />
     <None Include="dcwrOutput.html" />
   </ItemGroup>
@@ -138,7 +139,7 @@
     <ClCompile Include="..\..\Project\MS3\cstring.cpp" />
     <ClCompile Include="HtmlText.cpp" />
     <ClCompile Include="Text.cpp" />
-    <ClCompile Include="w9Tester_prof.cpp" />
+    <ClCompile Include="w9Tester.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Project\MS3\cstring.h" />

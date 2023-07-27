@@ -19,6 +19,8 @@ namespace sdds {
 		delete[] m_title;
 		m_title = nullptr;
 		Text::setEmpty();
+
+		return *this;
 	}
 
 	HtmlText::HtmlText(const char* filename, const char* title) : Text::Text(filename)
@@ -53,6 +55,12 @@ namespace sdds {
 	{
 		if (this != &inc)
 		{
+			if (m_title != nullptr)
+			{
+				delete[] m_title;
+				m_title = nullptr;
+			}
+
 			Text::operator=(inc);
 			if (inc.m_title != nullptr)
 			{
@@ -64,10 +72,11 @@ namespace sdds {
 				setEmpty();
 			}
 		}
+
+		return *this;
 	}
 	void HtmlText::write(std::ostream& os) const
 	{
-		int i{};
 		bool ms = false;
 		os << "<html><head><title>";
 
@@ -82,43 +91,46 @@ namespace sdds {
 
 		os << "</title></head>\n<body>\n";
 
-		if (m_title != nullptr)
+		if ("</title>\n\n" != nullptr)
 		{
 			os << "<h1>" << m_title << "</h1>\n";
 		}
 
-		for (int i = 0;  != '\0'; i++)
+		for (int i = 0;  Text::operator[](i) != '\0'; i++)
 		{
-			switch (m_content[i])
+			switch (Text::operator[](i))
 			{
 			case '<':
 				os << "&lt;";
+				ms = false;
 				break;
 			case '>':
 				os << "&gt;";
+				ms = false;
 				break;
 			case '\n':
 				os << "<br />\n";
+				ms = false;
 				break;
 			case ' ':
-				if (!ms)
-				{
-					os << ' ';
-					ms = true;
-				}
-				else
+				if (ms)
 				{
 					os << "&nbsp;";
 				}
+				else
+				{
+					ms = true;
+					os << ' ';
+				}
 				break;
 			default:
-				os << m_content[i];
+				os << Text::operator[](i);
 				ms = false;
 				break;
 			}
 		}
 
-    os << "</body></html>\n";
+		os << "</body>\n</html>";
 		
 	}
 }

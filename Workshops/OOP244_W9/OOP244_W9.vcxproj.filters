@@ -29,6 +29,9 @@
     <None Include="dcwrOutput.html">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="dcwr.html">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HtmlText.cpp">
@@ -37,10 +40,10 @@
     <ClCompile Include="Text.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="w9Tester_prof.cpp">
+    <ClCompile Include="..\..\Project\MS3\cstring.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Project\MS3\cstring.cpp">
+    <ClCompile Include="w9Tester.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

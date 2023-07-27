@@ -36,5 +36,5 @@ namespace sdds {
     
    std::ostream& operator<<(std::ostream& left, const Text& right);
 }
-#endif // !SDDS_PERSON_H__
+#endif // !SDDS_TEXT_H__
 
