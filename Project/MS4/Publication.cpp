@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////
-// MS3
+// MS4
 // Name: Farbod Moayeri
 // Id: 134395227
 // Email: fmoayeri2@myseneca.ca
@@ -27,7 +27,6 @@ namespace sdds {
 
 	Publication::Publication(const Publication& inc)
 	{
-		// might be good to validate inc?
 		if (inc != nullptr)
 		{
 			m_title = new char[strlen(inc) + 1];

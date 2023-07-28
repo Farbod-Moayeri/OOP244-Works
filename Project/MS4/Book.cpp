@@ -1,3 +1,15 @@
+///////////////////////////////////////////////////////
+// MS4
+// Name: Farbod Moayeri
+// Id: 134395227
+// Email: fmoayeri2@myseneca.ca
+// Section: NBB
+///////////////////////////////////////////////////////
+// I have done all the coding by myself and only copied
+// the code that my professor provided to complete my 
+// workshops and assignments.
+///////////////////////////////////////////////////////
+
 #define _CRT_SECURE_NO_WARNINGS
 #include <iomanip>
 #include <cstring>
@@ -26,7 +38,8 @@ namespace sdds {
 	{
 		if (src.m_author != nullptr)
 		{
-			m_author = new char[strlen(m_author) + 1];
+			delete[] m_author;
+			m_author = new char[strlen(src.m_author) + 1];
 			strcpy(m_author, src.m_author);
 		}
 	}
@@ -37,10 +50,10 @@ namespace sdds {
 		if (this != &src)
 		{
 			Publication::operator=(src);
-			delete[] m_author;
-			m_author = nullptr;
 			if (src.m_author != nullptr)
 			{
+				delete[] m_author;
+				m_author = nullptr;
 				m_author = new char[strlen(src.m_author) + 1];
 				strcpy(m_author, src.m_author);
 			}
@@ -100,7 +113,7 @@ namespace sdds {
 		{
 			is.ignore();
 			is.get(localAuthor, SDDS_AUTHOR_WIDTH + 1,'\n');
-			is.ignore('\t');
+			//is.ignore('\t');
 		}
 
 		if (is.good())

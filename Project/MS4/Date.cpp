@@ -171,10 +171,6 @@ namespace sdds {
             validate();
             
         }
-        else
-        {
-            //is.ignore(10000,'\n'); commented out for MS3
-        }
         
            
        
