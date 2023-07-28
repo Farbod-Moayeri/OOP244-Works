@@ -230,13 +230,12 @@ namespace sdds {
 		else
 		{
 			is >> localLibRef;
-			//is.ignore(10000,'\t');
-			is.getline(localShelfId, '\t');
-			//is.ignore(10000, '\t');
-			is.getline(localTitle, '\t');
-			//is.ignore(10000, '\t');
+			is.ignore(10000,'\t');
+			is.getline(localShelfId, SDDS_SHELF_ID_LEN + 1,'\t');
+			is.ignore(10000, '\t');
+			is.getline(localTitle, SDDS_TITLE_WIDTH + 1,'\t');
 			is >> localMembership;
-			//is.ignore(10000, '\t');
+			is.ignore(10000, '\t');
 			localDate.read(is);
 			if (localDate.errCode() != 0)
 			{

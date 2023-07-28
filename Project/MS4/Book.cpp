@@ -96,8 +96,8 @@ namespace sdds {
 		}
 		else
 		{
-			is.ignore(10000, '\t');
-			is.get(localAuthor, '\t');
+			is.ignore();
+			is.getline(localAuthor, SDDS_AUTHOR_WIDTH + 1,'\t');
 		}
 
 		if (is.good())
