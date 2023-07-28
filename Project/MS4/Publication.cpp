@@ -42,14 +42,21 @@ namespace sdds {
 	Publication& Publication::operator=(const Publication& inc)
 	{
 		
-		if (this != &inc && inc != nullptr) 
+		if (this != &inc) 
 		{
-			delete[] m_title;
-			m_title = new char[strlen(inc) + 1];
-			strcpy(m_title, inc);
-			strcpy(m_shelfId, inc.getShelf());
-			m_membership = inc.getMem();
-			m_date = inc.checkoutDate();
+			if (m_title != nullptr)
+			{
+				delete[] m_title;
+			}
+
+			if (inc != nullptr)
+			{
+				m_title = new char[strlen(inc.m_title) + 1];
+				strcpy(m_title, inc);
+				strcpy(m_shelfId, inc.getShelf());
+				m_membership = inc.getMem();
+				m_date = inc.checkoutDate();
+			}
 		}
 
 		return *this;
@@ -164,7 +171,7 @@ namespace sdds {
 			if (conIO(os))
 			{
 				os << "| " << setw(SDDS_SHELF_ID_LEN) << m_shelfId << " | " << left << setw(SDDS_TITLE_WIDTH)
-					<< setfill('.') << m_title << setfill(' ') << " | " << setw(5);
+					<< setfill('.') << string(m_title, SDDS_TITLE_WIDTH) << setfill(' ') << " | " << setw(5);
 				if (m_membership != 0)
 				{
 					os << m_membership;
@@ -186,7 +193,7 @@ namespace sdds {
 	// reads from the source the publication
 	istream& Publication::read(istream& is)
 	{
-		char localTitle[SDDS_TITLE_WIDTH + 1];
+		char localTitle[1000 + 1];
 		char localShelfId[SDDS_SHELF_ID_LEN + 1]{};
 		int localMembership{};
 		int localLibRef = -1;
@@ -210,7 +217,7 @@ namespace sdds {
 				is.setstate(ios_base::failbit);
 			}
 			cout << "Title: ";
-			is.get(localTitle, SDDS_TITLE_WIDTH + 1, '\n');
+			is.get(localTitle, 1000, '\n');
 			is.ignore(10000, '\n');
 			cout << "Date: ";
 			localDate.read(is);
@@ -223,13 +230,13 @@ namespace sdds {
 		else
 		{
 			is >> localLibRef;
-			is.ignore(10000,'\t');
-			is.get(localShelfId, SDDS_SHELF_ID_LEN + 1, '\t');
-			is.ignore(10000, '\t');
-			is.get(localTitle, SDDS_TITLE_WIDTH + 1, '\t');
-			is.ignore(10000, '\t');
+			//is.ignore(10000,'\t');
+			is.getline(localShelfId, '\t');
+			//is.ignore(10000, '\t');
+			is.getline(localTitle, '\t');
+			//is.ignore(10000, '\t');
 			is >> localMembership;
-			is.ignore(10000, '\t');
+			//is.ignore(10000, '\t');
 			localDate.read(is);
 			if (localDate.errCode() != 0)
 			{

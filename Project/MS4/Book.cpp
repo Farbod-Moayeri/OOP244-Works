@@ -1,5 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <iomanip>
+#include <cstring>
 
 using namespace std;
 
@@ -32,11 +33,12 @@ namespace sdds {
 	// copy assignment
 	Book& Book::operator=(const Book& src)
 	{
-		delete[] m_author;
-		m_author = nullptr;
 
 		if (this != &src)
 		{
+			Publication::operator=(src);
+			delete[] m_author;
+			m_author = nullptr;
 			if (src.m_author != nullptr)
 			{
 				m_author = new char[strlen(src.m_author) + 1];
@@ -57,20 +59,15 @@ namespace sdds {
 	// Writes author name to either file or terminal
 	std::ostream& Book::write(std::ostream& os) const
 	{
+		Publication::write(os);
 		if (conIO(os))
 		{
-			os << " ";
-
 			if (m_author != nullptr)
 			{
-				os << setw(SDDS_AUTHOR_WIDTH) << m_author;
+				os << " ";
+				os << setw(SDDS_AUTHOR_WIDTH) << string(m_author, SDDS_AUTHOR_WIDTH);
+				os << " |";
 			}
-			else
-			{
-				os << setw(SDDS_AUTHOR_WIDTH) << "unknown";
-			}
-
-			os << " |";
 		}
 		else
 		{
@@ -93,14 +90,14 @@ namespace sdds {
 
 		if (conIO(is))
 		{
-			is.ignore(10000, '\n'); // for newline
+			//is.ignore(10000, '\n'); // for newline
 			cout << "Author: ";
 			is.get(localAuthor, 256, '\n'); //
 		}
 		else
 		{
-			is.ignore(10000, '\n');
-			is.get(localAuthor, 256, '\0');
+			is.ignore(10000, '\t');
+			is.get(localAuthor, '\t');
 		}
 
 		if (is.good())
