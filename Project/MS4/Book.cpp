@@ -64,8 +64,10 @@ namespace sdds {
 		{
 			if (m_author != nullptr)
 			{
+				string truncAuth = m_author;
+				truncAuth = truncAuth.substr(0, SDDS_AUTHOR_WIDTH);
 				os << " ";
-				os << setw(SDDS_AUTHOR_WIDTH) << string(m_author, SDDS_AUTHOR_WIDTH);
+				os << setw(SDDS_AUTHOR_WIDTH) << truncAuth;
 				os << " |";
 			}
 		}
@@ -97,7 +99,8 @@ namespace sdds {
 		else
 		{
 			is.ignore();
-			is.getline(localAuthor, SDDS_AUTHOR_WIDTH + 1,'\t');
+			is.get(localAuthor, SDDS_AUTHOR_WIDTH + 1,'\n');
+			is.ignore('\t');
 		}
 
 		if (is.good())

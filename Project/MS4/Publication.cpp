@@ -23,7 +23,6 @@ namespace sdds {
 	Publication::~Publication()
 	{
 		delete[] m_title;
-		//m_title = nullptr;S
 	}
 
 	Publication::Publication(const Publication& inc)
@@ -44,13 +43,13 @@ namespace sdds {
 		
 		if (this != &inc) 
 		{
-			if (m_title != nullptr)
-			{
-				delete[] m_title;
-			}
-
 			if (inc != nullptr)
 			{
+				if (m_title != nullptr)
+				{
+					delete[] m_title;
+					m_title = nullptr;
+				}
 				m_title = new char[strlen(inc.m_title) + 1];
 				strcpy(m_title, inc);
 				strcpy(m_shelfId, inc.getShelf());
@@ -170,8 +169,11 @@ namespace sdds {
 		{
 			if (conIO(os))
 			{
+				string truncTitle = m_title;
+				truncTitle = truncTitle.substr(0, SDDS_TITLE_WIDTH);
+
 				os << "| " << setw(SDDS_SHELF_ID_LEN) << m_shelfId << " | " << left << setw(SDDS_TITLE_WIDTH)
-					<< setfill('.') << string(m_title, SDDS_TITLE_WIDTH) << setfill(' ') << " | " << setw(5);
+					<< setfill('.') << truncTitle << setfill(' ') << " | " << setw(5);
 				if (m_membership != 0)
 				{
 					os << m_membership;
@@ -230,12 +232,13 @@ namespace sdds {
 		else
 		{
 			is >> localLibRef;
-			is.ignore(10000,'\t');
-			is.getline(localShelfId, SDDS_SHELF_ID_LEN + 1,'\t');
-			is.ignore(10000, '\t');
-			is.getline(localTitle, SDDS_TITLE_WIDTH + 1,'\t');
+			is.ignore();
+			is.get(localShelfId, SDDS_SHELF_ID_LEN + 1,'\t');
+			is.ignore();
+			is.get(localTitle, 1000,'\t');
+			is.ignore();
 			is >> localMembership;
-			is.ignore(10000, '\t');
+			is.ignore();
 			localDate.read(is);
 			if (localDate.errCode() != 0)
 			{

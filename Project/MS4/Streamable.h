@@ -24,7 +24,7 @@ namespace sdds {
 		virtual std::istream& read(std::istream& is) = 0;
 		virtual bool conIO(const std::ios& ios);
 		virtual operator bool() const = 0;
-		~Streamable() = default;
+		virtual ~Streamable() = default;
 	};
 
 	std::ostream& operator<<(std::ostream& left, const Streamable& right);
