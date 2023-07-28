@@ -1,0 +1,23 @@
+///////////////////////////////////////////////////////////////////////////
+
+                              
+                             Workshop - #9
+Full Name  : Farbod Moayeri
+Student ID#: 134395227
+Email      : fmoayeri2@myseneca.ca
+Section    : NBB
+
+Authenticity Declaration:
+
+I declare this submission is the result of my own work and has not been
+shared with any other student or 3rd party content provider. This submitted
+piece of work is entirely of my own creation.
+///////////////////////////////////////////////////////////////////////////
+
+
+This workshop allowed me to understand how to manage the resources of a derived class without having loads of memory problems.
+It also gave me further practice on creating well defined copy constructors and copy assignments.
+I was also required to explicitly invoke the Text:: copy assignment inside of the HtmlText:: copy assignment which gave me
+further insight into how copy assignment works in a derived class whose base class also has resources that are managed with
+a copy assignment. Same thing with the copy constructor but this time I initialized the base class resources by invoking a
+constructor of my choosing, using the derived classes constructor.
