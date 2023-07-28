@@ -14,13 +14,16 @@
 #define SDDS_LIBAPP_H
 
 #include "Menu.h"
+#include "Lib.h"
+
 
 namespace sdds {
 
 
    class LibApp {
 	   bool m_changed{};
-       char m_pubFileName[]
+       char m_pubFileName[SDDS_PUBLICATION_FILE_NAME + 1];
+       Publication
 	   Menu m_mainMenu;
 	   Menu m_exitMenu;
 
