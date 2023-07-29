@@ -15,6 +15,7 @@
 
 #include "Menu.h"
 #include "Lib.h"
+#include "Publication.h"
 
 
 namespace sdds {
@@ -22,8 +23,12 @@ namespace sdds {
 
    class LibApp {
 	   bool m_changed{};
-       char m_pubFileName[SDDS_PUBLICATION_FILE_NAME + 1];
-       Publication
+       char m_pubFileName[SDDS_PUBLICATION_FILE_NAME + 1]{};
+       Publication* m_PPA[SDDS_LIBRARY_CAPACITY]{};
+       int m_NOLP{};
+       int m_LLRN{};
+
+       Menu m_publicationMenu;
 	   Menu m_mainMenu;
 	   Menu m_exitMenu;
 

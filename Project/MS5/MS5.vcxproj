@@ -149,6 +149,10 @@
     <ClInclude Include="Streamable.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="LibRecs.txt" />
+    <Text Include="LibRecsSmall.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

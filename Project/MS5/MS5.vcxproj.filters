@@ -75,4 +75,12 @@
       <Filter>Resource Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="LibRecs.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="LibRecsSmall.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+  </ItemGroup>
 </Project>

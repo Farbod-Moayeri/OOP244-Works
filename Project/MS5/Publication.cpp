@@ -60,6 +60,7 @@ namespace sdds {
 		return *this;
 	}
 
+
 	// Sets the membership attribute to either zero or a five-digit integer.
 	void Publication::set(int member_id)
 	{
