@@ -16,6 +16,7 @@ using namespace std;
 #include "LibApp.h"
 #include "Utils.h"
 #include "Book.h"
+#include "PublicationSelector.h"
 
 
 namespace sdds {
@@ -29,6 +30,7 @@ namespace sdds {
 		m_mainMenu << "Add New Publication" << "Remove Publication" << "Checkout publication from library" << "Return publication to library";
 		m_exitMenu << "Save changes and exit" << "Cancel and go back to the main menu";
 		m_publicationMenu << "Book" << "Publication"; //MS5
+		strncpy(m_pubFileName, "LibRecs.txt", SDDS_PUBLICATION_FILE_NAME);
 		load();
 	}
 	void LibApp::run()
@@ -112,7 +114,7 @@ namespace sdds {
 		int i{};
 		char pType;
 		cout << "Loading Data" << endl;
-		ifstream reading("LibRecs.txt", ios::app);
+		ifstream reading(m_pubFileName, ios::app);
 
 		if (reading)
 		{
@@ -138,18 +140,73 @@ namespace sdds {
 		m_LLRN = i;
 
 	}
+
 	void LibApp::save()
 	{
+		int i;
 		cout << "Saving Data" << endl;
+		ofstream writing(m_pubFileName, ios::app);
+		if (writing)
+		{
+			for (i = 0; writing && i < m_NOLP; i++) {
+
+				if (m_PPA[i]->getRef() != 0)
+				{
+					m_PPA[i]->write(writing);
+				}
+			}
+		}
+		else
+		{
+			cout << "ERROR: FILE AT LIBAPP::SAVE() FAILED TO OPEN!";
+		}
+
 		m_changed = false;
 	}
-	void LibApp::search()
+	void LibApp::search(const int type)
 	{
-		cout << "Searching for publication" << endl;
+		int i{};
+		bool matchFound = false;
+		unsigned choice{};
+		char srchTitle[256 + 1];
+		PublicationSelector selector("Select one of the following found matches:", 15);
+
+		choice = m_publicationMenu.run();
+		if (choice == 0)
+		{
+			cout << "Aborted!";
+		}
+		else
+		{
+			cout << "Publication Title: ";
+			cin.get(srchTitle, 256, '\n');
+			cin.get();
+			if (cin.good())
+			{
+				selector.run();
+				for (int i = 0; i < m_NOLP; i++)
+				{
+					if (m_PPA[i] != nullptr && *m_PPA[i] && strcmp(m_PPA[i]->operator const char* const(), srchTitle))
+					{
+						selector << m_PPA[i];
+						matchFound = true;
+					}
+
+				}
+			}
+			else
+			{
+				cin.clear();
+				cin.ignore(10000, '\n');
+			}
+		}
+		// cout << "Searching for publication" << endl;
+
+
 	}
 	void LibApp::returnPub()
 	{
-		search();
+		search(SDDS_SEARCH_CHECKOUT);
 		cout << "Returning publication" << endl;
 		cout << "Publication returned" << endl;
 		m_changed = true;
@@ -167,7 +224,7 @@ namespace sdds {
 	void LibApp::removePublication()
 	{
 		cout << "Removing publication from library" << endl;
-		search();
+		search(SDDS_SEARCH_ALL);
 		if (confirm("Remove this publication from the library?") == true)
 		{
 			m_changed = true;
@@ -177,7 +234,7 @@ namespace sdds {
 
 	void LibApp::checkOutPub()
 	{
-		search();
+		search(SDDS_SEARCH_CHECKOUT);
 		if (confirm("Check out publication?") == true)
 		{
 			m_changed = true;

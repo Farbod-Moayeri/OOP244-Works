@@ -20,6 +20,18 @@ using namespace std;
 
 namespace sdds {
 
+	bool Publication::conIO(const ios& ios)
+	{
+		bool isit = false;
+
+		if (ios)
+		{
+			isit = true;
+		}
+
+		return isit;
+	}
+
 	Publication::~Publication()
 	{
 		delete[] m_title;

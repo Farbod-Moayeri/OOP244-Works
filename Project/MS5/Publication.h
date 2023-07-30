@@ -27,10 +27,11 @@ namespace sdds {
 		int m_libRef{ -1 };
 		Date m_date{};
 	public:
+		virtual bool Streamable::conIO(const ios& ios);
 		Publication() = default;
 
 		// RULE OF THREE
-		~Publication();
+		virtual ~Publication();
 		Publication(const Publication& inc);
 		Publication& operator=(const Publication& inc);
 		// RULE OF THREE

@@ -26,7 +26,11 @@ namespace sdds {
     const int SDDS_PUBLICATION_FILE_NAME = 256;
     // The possible length the publication data file name can be
     const int SDDS_LIBRARY_CAPACITY = 5000;
-    // Maximum number of publications the library can hold.
+    // Maximum number of publications the library can hold
+    const int SDDS_SEARCH_ALL = 1;
+    const int SDDS_SEARCH_CHECKOUT = 2;
+    const int SDDS_SEARCH_AVAILABLE = 3;
+    // Search values for looking at library records
 }
 
 #endif // !1

@@ -218,11 +218,11 @@ namespace sdds {
 		return ostr;
 	}
 
-	unsigned Menu::run() const
+	unsigned Menu::run(const char errMsg[]) const
 	{
 		unsigned temp;
 		displayMenu(cout);
-		temp = ut.getUnsignedRange(0, m_numItems, "Invalid Selection, try again: ");
+		temp = ut.getUnsignedRange(0, m_numItems, errMsg);
 		return temp;
 	}
 

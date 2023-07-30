@@ -22,7 +22,7 @@ namespace sdds {
 	public:
 		virtual std::ostream& write(std::ostream& os) const = 0; 
 		virtual std::istream& read(std::istream& is) = 0;
-		virtual bool conIO(const std::ios& ios);
+		virtual bool conIO(const std::ios& ios) = 0;
 		virtual operator bool() const = 0;
 		virtual ~Streamable() = default;
 	};

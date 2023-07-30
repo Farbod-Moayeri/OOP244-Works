@@ -14,17 +14,6 @@ using namespace std;
 #include "Streamable.h"
 
 namespace sdds {
-    bool Streamable::conIO(const ios& ios)
-    {
-        bool isit = false;
-
-        if (ios)
-        {
-            isit = true;
-        }
-
-        return isit;
-    }
 
     ostream& operator<<(ostream& left, const Streamable& right)
     {

@@ -55,8 +55,7 @@ namespace sdds {
 		const char* operator[](unsigned index) const;
 		std::ostream& displayTitle(std::ostream& ostr = std::cout)const;
 		std::ostream& displayMenu(std::ostream& ostr = std::cout)const;
-		unsigned run() const;
-		
+		unsigned run(const char errMsg[] = "Invalid Selection, try again: ") const;
 	};
 
 	
