@@ -27,7 +27,6 @@ namespace sdds {
 		int m_libRef{ -1 };
 		Date m_date{};
 	public:
-		virtual bool Streamable::conIO(const ios& ios);
 		Publication() = default;
 
 		// RULE OF THREE
@@ -60,13 +59,13 @@ namespace sdds {
 		// returns the membership attribute
 		int getMem() const;
 		// Returns true if the address of the io object is the same as the address of either the cin object or the cout object.
-		bool conIO(std::ios& io)const;
+		virtual bool conIO(const std::ios& ios) const override;
 		// writes onto source the publication
-		virtual std::ostream& write(std::ostream& os) const;
+		virtual std::ostream& write(std::ostream& os) const override;
 		// reads from the source the publication
-		virtual std::istream& read(std::istream& is);
+		virtual std::istream& read(std::istream& is) override;
 		// returns true if shelfId and shelfTitle are valid 
-		virtual operator bool() const;
+		virtual operator bool() const override;
 		
 	};
 }

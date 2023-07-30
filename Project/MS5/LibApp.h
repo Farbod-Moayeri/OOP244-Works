@@ -32,10 +32,11 @@ namespace sdds {
 	   Menu m_mainMenu;
 	   Menu m_exitMenu;
 
+       const Publication* const getPub(const int libRef) const;
 	   bool confirm(const char* message);
        void load();  // prints: "Loading Data"<NEWLINE>
        void save();  // prints: "Saving Data"<NEWLINE>
-       void search(const int type = SDDS_SEARCH_ALL);  // prints: "Searching for publication"<NEWLINE>
+       int search(const int type = SDDS_SEARCH_ALL) const;  // prints: "Searching for publication"<NEWLINE>
 
        void returnPub();  /*  Calls the search() method.
                               prints "Returning publication"<NEWLINE>
@@ -46,7 +47,7 @@ namespace sdds {
        void removePublication();
        void checkOutPub();
    public:
-       LibApp();
+       LibApp(const char filename[]);
        void run();
    };
 }

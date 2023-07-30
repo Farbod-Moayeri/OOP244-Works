@@ -40,9 +40,9 @@ int main() {
       infile.ignore();
       if (infile) {
          if (type == 'P')
-            p[i] = new Publication;
+            p[i] = new Publication[1];
          else if (type == 'B')
-            p[i] = new Book;
+            p[i] = new Book[1];
          if (p[i]) {
             infile >> *p[i];
             // find publications with Harry or MoneySence in the title

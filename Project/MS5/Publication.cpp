@@ -19,19 +19,6 @@ using namespace std;
 #include "Publication.h"
 
 namespace sdds {
-
-	bool Publication::conIO(const ios& ios)
-	{
-		bool isit = false;
-
-		if (ios)
-		{
-			isit = true;
-		}
-
-		return isit;
-	}
-
 	Publication::~Publication()
 	{
 		delete[] m_title;
@@ -163,11 +150,11 @@ namespace sdds {
 		return m_membership;
 	}
 	// Returns true if the address of the io object is the same as the address of either the cin object or the cout object.
-	bool Publication::conIO(ios& io) const
+	bool Publication::conIO(const std::ios& ios) const
 	{
 		bool isit = false;
 
-		if (&io == &cout || &io == &cin)
+		if (&ios == &cout || &ios == &cin)
 		{
 			isit = true;
 		}
