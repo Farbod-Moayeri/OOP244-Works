@@ -115,7 +115,7 @@ namespace sdds {
    }
    std::istream& Date::read(std::istream& is)
    {
-       
+        char a{};
         int day = -1, month = -1, year = -1;
 
         errCode(NO_ERROR);
@@ -127,11 +127,13 @@ namespace sdds {
 
         if (ut.getInt(year, is))
         {
-            if (is.get() == '/')
+            a = is.get();
+            if (a == '/' || a == '-')
             {
                 if (ut.getInt(month, is))
                 {
-                    if (is.get() == '/')
+                    a = is.get();
+                    if (a == '/' || a == '-')
                     {
                         if(ut.getInt(day, is)){}
                         else

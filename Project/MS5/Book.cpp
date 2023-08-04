@@ -112,7 +112,7 @@ namespace sdds {
 		else
 		{
 			is.ignore();
-			is.get(localAuthor, SDDS_AUTHOR_WIDTH + 1,'\n');
+			is.get(localAuthor, 256,'\n');
 			//is.ignore('\t');
 		}
 

@@ -261,7 +261,7 @@ namespace sdds {
 	Publication::operator bool() const
 	{
 		bool isit = false;
-		if (m_shelfId[0] != '\0' && m_title != nullptr)
+		if (m_shelfId != nullptr && m_shelfId[0] != '\0' && m_title != nullptr)
 		{
 			isit = true;
 		}

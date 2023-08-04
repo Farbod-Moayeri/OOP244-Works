@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 ///////////////////////////////////////////////////////
 // MS2
 // Name: Farbod Moayeri
@@ -25,13 +26,22 @@ namespace sdds {
 		return m_PPA[libRef] != nullptr && *m_PPA[libRef] ? m_PPA[libRef] : nullptr;
 	}
 
-	LibApp::LibApp(const char filename[])
+	LibApp::~LibApp()
+	{
+		int i{};
+		for (i = 0; i < SDDS_LIBRARY_CAPACITY; i++)
+		{
+			delete[] m_PPA[i];
+		}
+	}
+
+	LibApp::LibApp(const char filename[]) : m_mainMenu("Seneca Library Application"), m_exitMenu("Changes have been made to the data, what would you like to do?"), m_publicationMenu("Choose the type of publication:")
 	{
 		m_pubFileName[0] = '\0';
 		m_changed = false;
-		m_mainMenu = "Seneca Library Application";
-		m_exitMenu = "Changes have been made to the data, what would you like to do?";
-		m_publicationMenu = "Choose the type of publication:"; // MS5
+		//m_mainMenu = "Seneca Library Application";
+		//m_exitMenu = "Changes have been made to the data, what would you like to do?";
+		//m_publicationMenu = "Choose the type of publication:"; // MS5
 
 		m_mainMenu << "Add New Publication" << "Remove Publication" << "Checkout publication from library" << "Return publication to library";
 		m_exitMenu << "Save changes and exit" << "Cancel and go back to the main menu";
@@ -120,10 +130,9 @@ namespace sdds {
 	}
 	void LibApp::load()
 	{
-		Book temp{};
 		int i{};
 		char pType;
-		if (m_pubFileName[0] != '\0')
+		if (m_pubFileName != nullptr && m_pubFileName[0] != '\0')
 		{
 			cout << "Loading Data" << endl;
 			ifstream reading(m_pubFileName, ios::app);
@@ -143,14 +152,16 @@ namespace sdds {
 						}
 					}
 				}
+				i--;
 			}
 			else
 			{
 				cout << "ERROR: FILE AT LIBAPP::LOAD() FAILED TO OPEN!";
 			}
 
+			reading.close();
 			m_NOLP = i;
-			m_LLRN = m_PPA[i]->getRef();
+			m_LLRN = m_PPA[i-1]->getRef();
 		}
 
 	}
@@ -175,6 +186,7 @@ namespace sdds {
 			cout << "ERROR: FILE AT LIBAPP::SAVE() FAILED TO OPEN!";
 		}
 
+		writing.close();
 		m_changed = false;
 	}
 	int LibApp::search(const int type) const
@@ -184,7 +196,7 @@ namespace sdds {
 		bool matchFound = false;
 		unsigned choice{};
 		char srchTitle[256 + 1];
-		char choiceType;
+		char choiceType = 'Z';
 		PublicationSelector selector("Select one of the following found matches:", 15);
 
 		choice = m_publicationMenu.run();
@@ -256,7 +268,7 @@ namespace sdds {
 	}
 	void LibApp::newPublication()
 	{
-		Publication* temp;
+		Publication* temp{};
 		unsigned pubChoice = 0;
 		if (m_NOLP == SDDS_LIBRARY_CAPACITY || m_NOLP > SDDS_LIBRARY_CAPACITY)
 		{
@@ -267,11 +279,11 @@ namespace sdds {
 			pubChoice = m_publicationMenu.run();
 			if (pubChoice == 1)
 			{
-				temp = new Book[1];
+				temp = new Book;
 			}
 			else if (pubChoice == 2)
 			{
-				temp = new Publication[1];
+				temp = new Publication;
 			}
 
 			if (pubChoice != 0)
@@ -293,14 +305,22 @@ namespace sdds {
 							m_LLRN++;
 							temp->setRef(m_LLRN);
 							m_NOLP++;
-							m_PPA[m_NOLP] = temp;
-							m_changed = true;
-							cout << "Publication added" << endl;
+							if (m_NOLP < SDDS_LIBRARY_CAPACITY)
+							{
+								m_PPA[m_NOLP] = temp;
+								m_changed = true;
+								cout << "Publication added" << endl;
+							}
+							else
+							{
+								cout << "Publication could not be added, capacity is full" << endl;
+							}
+							
 						}
 						else
 						{
 							cout << "Failed to add publication!";
-							delete[] temp;
+							delete temp;
 						}
 					}
 					else
@@ -322,7 +342,12 @@ namespace sdds {
 			if (confirm("Remove this publication from the library?") == true)
 			{
 				m_PPA[removeRef]->setRef(0);
+				m_changed = true;
 				cout << "Publication removed" << endl;
+			}
+			else
+			{
+				cout << "Aborted!";
 			}
 		}
 	}
@@ -330,14 +355,37 @@ namespace sdds {
 	void LibApp::checkOutPub()
 	{
 		unsigned checkout = 0;
+		int tempMem{};
+		bool isValid = true;
+
 		cout << "Checkout publication from the library";
 		checkout = search(SDDS_SEARCH_AVAILABLE);
 		if (checkout != 0)
 		{
 			if (confirm("Check out publication?") == true)
 			{
-				m_changed = true;
-				cout << "Publication checked out" << endl;
+				cout << "Enter Membership number: ";
+				do {
+					isValid = true;
+					cin >> tempMem;
+					if (cin.fail() || tempMem > 99999 || tempMem < 10000)
+					{
+						if (cin.fail())
+						{
+							cin.clear();
+							cin.ignore(10000, '\n');
+						}
+						isValid = false;
+						cout << "Invalid membership number, try again: " << endl;
+					}
+				} while (!isValid);
+				
+				if (m_PPA[checkout] != nullptr)
+				{
+					m_PPA[checkout]->set(tempMem);
+					m_changed = true;
+					cout << "Publication checked out" << endl;
+				}
 			}
 			else
 			{
