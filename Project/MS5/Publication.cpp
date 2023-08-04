@@ -41,7 +41,7 @@ namespace sdds {
 		
 		if (this != &inc) 
 		{
-			if (inc != nullptr)
+			if (inc != nullptr && inc)
 			{
 				if (m_title != nullptr)
 				{
@@ -186,6 +186,10 @@ namespace sdds {
 			else
 			{
 				os << type() << '\t' << m_libRef << '\t' << m_shelfId << '\t' << m_title << '\t' << m_membership << '\t' << m_date;
+				if (type() == 'P')
+				{
+					os << endl;
+				}
 			}
 		}
 

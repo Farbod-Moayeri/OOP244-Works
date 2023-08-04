@@ -91,6 +91,10 @@ namespace sdds {
 			{
 				os << m_author;
 			}
+			if (type() == 'B')
+			{
+				os << endl;
+			}
 		}
 
 		return os;

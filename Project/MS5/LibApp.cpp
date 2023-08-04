@@ -170,7 +170,7 @@ namespace sdds {
 	{
 		int i;
 		cout << "Saving Data" << endl;
-		ofstream writing(m_pubFileName, ios::app);
+		ofstream writing(m_pubFileName, ios::trunc);
 		if (writing)
 		{
 			for (i = 0; writing && i < m_NOLP; i++) {
@@ -276,6 +276,7 @@ namespace sdds {
 		}
 		else
 		{
+			cout << "Adding new publication to the library" << endl;
 			pubChoice = m_publicationMenu.run();
 			if (pubChoice == 1)
 			{
@@ -302,12 +303,12 @@ namespace sdds {
 						m_changed = true;
 						if (*temp)
 						{
-							m_LLRN++;
-							temp->setRef(m_LLRN);
-							m_NOLP++;
 							if (m_NOLP < SDDS_LIBRARY_CAPACITY)
 							{
+								m_LLRN++;
+								temp->setRef(m_LLRN);
 								m_PPA[m_NOLP] = temp;
+								m_NOLP++;
 								m_changed = true;
 								cout << "Publication added" << endl;
 							}
@@ -332,6 +333,7 @@ namespace sdds {
 		}
 
 	}
+
 	void LibApp::removePublication()
 	{
 		unsigned removeRef = 0;

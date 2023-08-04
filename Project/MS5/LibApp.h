@@ -47,7 +47,10 @@ namespace sdds {
        void removePublication();
        void checkOutPub();
    public:
+       // Rule of Three - Object is not meant to be copied in any way
        virtual ~LibApp();
+       void LipApp(const LibApp inc) = delete;
+       void operator=(const LibApp inc) = delete;
        LibApp(const char filename[]);
        void run();
    };
