@@ -56,7 +56,7 @@ namespace sdds {
 	// Sets the membership attribute to either zero or a five-digit integer.
 	void Publication::set(int member_id)
 	{
-		if (m_membership == 0 && member_id > 9999 && member_id < 100000)
+		if ((m_membership == 0 && member_id > 9999 && member_id < 100000) || (m_membership != 0 && member_id == 0))
 		{
 			m_membership = member_id;
 		}

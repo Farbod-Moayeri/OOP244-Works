@@ -182,7 +182,7 @@ namespace sdds {
        }
        else
        {
-           os << m_year << '/' << right << setw(2) << setfill('0') << m_mon << '/' << m_day << setfill(' ') << setw(0);
+           os << m_year << '/' << right << setw(2) << setfill('0') << m_mon << '/' << right << setw(2) << setfill('0') << m_day << setfill(' ') << setw(0);
        }
 
        return os;

@@ -80,7 +80,7 @@ namespace sdds {
 				string truncAuth = m_author;
 				truncAuth = truncAuth.substr(0, SDDS_AUTHOR_WIDTH);
 				os << " ";
-				os << setw(SDDS_AUTHOR_WIDTH) << truncAuth;
+				os << setw(SDDS_AUTHOR_WIDTH) << left <<truncAuth;
 				os << " |";
 			}
 		}

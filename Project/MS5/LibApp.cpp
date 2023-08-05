@@ -13,6 +13,7 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
+#include <cstring>
 
 using namespace std;
 #include "LibApp.h"
@@ -35,6 +36,8 @@ namespace sdds {
 			}
 
 		}
+
+		return nullptr;
 	}
 
 	bool LibApp::confirm(const char* message)
@@ -86,7 +89,11 @@ namespace sdds {
 
 			reading.close();
 			m_NOLP = i;
-			m_LLRN = m_PPA[i - 1]->getRef();
+			if (i > -1)
+			{
+				m_LLRN = m_PPA[i - 1]->getRef();
+			}
+			
 		}
 
 	}
@@ -137,15 +144,18 @@ namespace sdds {
 			}
 
 			cout << "Publication Title: ";
-			cin.get(srchTitle, 256, '\n');
-			if (cin.peek() != '\n') {
-				cin.setstate(ios::failbit);
-			}
-			else
+			cin.get(srchTitle, 256);
+			
+			if (cin.peek() == '\n')
 			{
 				cin.ignore();
 			}
-
+			else if (cin.fail())
+			{
+				cin.clear();
+				cin.ignore(10000, '\n');
+			}
+			
 			if (cin.good()) {
 				for (i = 0; i < m_NOLP; i++)
 				{
@@ -249,7 +259,7 @@ namespace sdds {
 				}
 				else
 				{
-					if (confirm("Add this publication to library?") == true)
+					if (confirm("Add this publication to the library?") == true)
 					{
 						m_changed = true;
 						if (*temp)
@@ -292,7 +302,7 @@ namespace sdds {
 	void LibApp::removePublication()
 	{
 		unsigned removeRef = 0;
-		cout << "Removing publication from library" << endl;
+		cout << "Removing publication from the library" << endl;
 		removeRef = search(SDDS_SEARCH_ALL);
 		if (removeRef != 0)
 		{
@@ -315,7 +325,7 @@ namespace sdds {
 		int tempMem{};
 		bool isValid = true;
 
-		cout << "Checkout publication from the library";
+		cout << "Checkout publication from the library" << endl;
 		checkout = search(SDDS_SEARCH_AVAILABLE);
 		if (checkout != 0)
 		{
@@ -356,17 +366,17 @@ namespace sdds {
 		int i{};
 		for (i = 0; i < SDDS_LIBRARY_CAPACITY; i++)
 		{
-			delete[] m_PPA[i];
+			delete m_PPA[i];
 		}
 	}
 
-	LibApp::LibApp(const char filename[]) : m_mainMenu("Seneca Library Application"), m_exitMenu("Changes have been made to the data, what would you like to do?"), m_publicationMenu("Choose the type of publication:")
+	LibApp::LibApp(const char filename[])
 	{
 		m_pubFileName[0] = '\0';
 		m_changed = false;
-		//m_mainMenu = "Seneca Library Application";
-		//m_exitMenu = "Changes have been made to the data, what would you like to do?";
-		//m_publicationMenu = "Choose the type of publication:"; // MS5
+		m_mainMenu = "Seneca Library Application";
+		m_exitMenu = "Changes have been made to the data, what would you like to do?";
+		m_publicationMenu = "Choose the type of publication:"; // MS5
 
 		m_mainMenu << "Add New Publication" << "Remove Publication" << "Checkout publication from library" << "Return publication to library";
 		m_exitMenu << "Save changes and exit" << "Cancel and go back to the main menu";
