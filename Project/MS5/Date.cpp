@@ -1,4 +1,4 @@
-// Final Project Milestone 1 
+// Final Project Milestone 5
 // Date Module
 // File	Date.cpp
 // Version 1.0
@@ -75,12 +75,6 @@ namespace sdds {
       return 365 * ty + ty / 4 - ty / 100 + ty / 400 + (153 * tm - 457) / 5 + m_day - 306;
    }
    void Date::setToToday() {
-       /*time_t t = time(NULL);
-       tm lt = *localtime(&t);
-       m_day = lt.tm_mday;
-       m_mon = lt.tm_mon + 1;
-       m_year = lt.tm_year + 1900;
-       errCode(NO_ERROR); MS2 and before*/
        if (sdds_test) {
            m_day = sdds_day;
            m_mon = sdds_mon;
@@ -188,7 +182,7 @@ namespace sdds {
        }
        else
        {
-           os << m_year << '/' << setw(2) << setfill('0') << m_mon << '/' << m_day << setfill(' ') << setw(0);
+           os << m_year << '/' << right << setw(2) << setfill('0') << m_mon << '/' << m_day << setfill(' ') << setw(0);
        }
 
        return os;

@@ -32,7 +32,7 @@ namespace sdds {
 	   Menu m_mainMenu;
 	   Menu m_exitMenu;
 
-       const Publication* const getPub(const int libRef) const;
+       Publication* getPub(const int libRef) const;
 	   bool confirm(const char* message);
        void load();  // prints: "Loading Data"<NEWLINE>
        void save();  // prints: "Saving Data"<NEWLINE>
@@ -51,7 +51,9 @@ namespace sdds {
        virtual ~LibApp();
        void LipApp(const LibApp inc) = delete;
        void operator=(const LibApp inc) = delete;
+       // 1 argument constructor that takes the filename as the argument
        LibApp(const char filename[]);
+       // How to start the application
        void run();
    };
 }

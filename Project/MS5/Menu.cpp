@@ -1,6 +1,5 @@
-#define _CRT_SECURE_NO_WARNINGS
 ///////////////////////////////////////////////////////
-// MS2
+// MS5
 // Name: Farbod Moayeri
 // Id: 134395227
 // Email: fmoayeri2@myseneca.ca
@@ -11,13 +10,18 @@
 // workshops and assignments.
 ///////////////////////////////////////////////////////
 
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <cstring>
 #include <iomanip>
+
+using namespace std;
+
 #include "Menu.h"
 #include "cstring.h" 
 #include "Utils.h"
 
-using namespace std;
+
 
 namespace sdds {
 
@@ -48,7 +52,7 @@ namespace sdds {
 		return (m_item != nullptr && m_length != 0);
 	}
 
-	MenuItem::operator const char* () const
+	MenuItem::operator const char* const() const
 	{
 		return m_item;
 	}

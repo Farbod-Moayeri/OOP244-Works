@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////
-// MS4
+// MS5
 // Name: Farbod Moayeri
 // Id: 134395227
 // Email: fmoayeri2@myseneca.ca
@@ -26,14 +26,7 @@ namespace sdds {
 
 	Publication::Publication(const Publication& inc)
 	{
-		if (inc != nullptr)
-		{
-			m_title = new char[strlen(inc) + 1];
-			strcpy(m_title, inc);
-			strcpy(m_shelfId, inc.getShelf());
-			m_membership = inc.getMem();
-			m_date = inc.checkoutDate();
-		}
+		operator=(inc);
 	}
 
 	Publication& Publication::operator=(const Publication& inc)
@@ -72,7 +65,7 @@ namespace sdds {
 	// Sets the **libRef** attribute value
 	void Publication::setRef(int value)
 	{
-		if (value > -1 && m_libRef == -1)
+		if (value > -1)
 		{
 			m_libRef = value;
 		}

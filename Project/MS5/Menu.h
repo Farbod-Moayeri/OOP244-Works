@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////
-// MS2
+// MS5
 // Name: Farbod Moayeri
 // Id: 134395227
 // Email: fmoayeri2@myseneca.ca
@@ -23,29 +23,38 @@ namespace sdds {
 	class MenuItem {
 		char* m_item{};
 		unsigned m_length{};
+		// default constructor
 		MenuItem(const char string[] = nullptr);
+		// Rule of three : Not meant to be copied in any way
 		MenuItem(const MenuItem& src) = delete;
 		MenuItem& operator=(const MenuItem& src) = delete; 
-		~MenuItem();
+		virtual ~MenuItem();
+		// Determines if there is text in the menu, if there is true
 		operator bool()const;
-		operator const char* () const;
+		// returns the address of m_item
+		operator const char* const() const;
+		// outputs m_item into ostream if it is not null
 		std::ostream& displayItem(std::ostream& ostr)const;
+		// Owner class Menu *wink wink*
 		friend class Menu;
 	};
 
 	class Menu {
+		
 		MenuItem* m_ItemArray[MAX_MENU_ITEMS]{};
 		unsigned m_numItems{};
 		MenuItem m_title{};
+
+		// Rule of three - not meant to be copied
 		Menu(const Menu& src) = delete;
 		Menu& operator=(const Menu& src) = delete;
 		
-		
+		// owned
 		friend MenuItem;
 	public:
 
 		Menu(const char string[] = nullptr);
-		~Menu();
+		virtual ~Menu();
 		operator bool()const;
 		operator unsigned() const;
 		operator int() const;

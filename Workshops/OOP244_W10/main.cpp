@@ -55,7 +55,7 @@ int main() {
    cout << endl;
 
    // Call the  listArrayElements to list all the students, Title: "All students:"
-   listArrayElements("All students", S, 6);
+   listArrayElements("All students:", S, 6);
 
    cout << "Searching for students with 4.0 Gpa:" << endl;
    // Call the search function to search the array S 

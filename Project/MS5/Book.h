@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////
-// MS4
+// MS5
 // Name: Farbod Moayeri
 // Id: 134395227
 // Email: fmoayeri2@myseneca.ca
@@ -26,15 +26,15 @@ namespace sdds {
 		Book(const Book& src);
 		Book& operator=(const Book& src);
 		// Returns character 'B'
-		virtual char type()const;
+		virtual char type()const override;
 		// Writes author name to either file or terminal
-		virtual std::ostream& write(std::ostream& os) const;
+		virtual std::ostream& write(std::ostream& os) const override;
 		// Reads author name from either file or terminal and sets m_author attribute to it
-		virtual std::istream& read(std::istream& is);
+		virtual std::istream& read(std::istream& is) override;
 		// sets member id using base class and then resets date to current date
-		virtual void set(int member_id);
+		virtual void set(int member_id) override;
 		// return true if the author's name exists and is not empty and the base class's operator bool() has returned true
-		virtual operator bool() const;
+		virtual operator bool() const override;
 	};
 }
 #endif // !SDDS_BOOK_H
